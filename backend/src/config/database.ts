@@ -10,15 +10,4 @@ const sequelize = new Sequelize({
   database: process.env.DB_NAME,
 });
 
-// Database connection and syncing
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Database connection successful');
-    return sequelize.sync(); // Sync models (optional in dev)
-  })
-
-  .catch((error) => {
-    console.error('Database connection failed:', error);
-  });
 export default sequelize;

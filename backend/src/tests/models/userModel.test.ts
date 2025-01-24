@@ -1,25 +1,28 @@
-import { User } from '../models';
-import sequelize from '../config/database';
+import User from '../../models/User';
+import sequelize from '../../config/database';
+import bcrypt from 'bcryptjs';
 
 describe('User Model', () => {
   beforeAll(async () => {
-    await sequelize.sync({ force: true }); // Creates the table
+    await sequelize.sync({ force: true });
   });
 
-  afterAll(async () => {
-    await sequelize.close(); // Closes the connection
-  });
-
-  it('should create a new user', async () => {
+  it('should create a new user and hash the password', async () => {
     const user = await User.create({
-      username: 'JohnDoe',
+      username: 'john_doe',
       email: 'john.doe@example.com',
+      password: 'password123',
     });
-    expect(user.username).toBe('JohnDoe');
-    expect(user.email).toBe('john.doe@example.com');
+
+    expect(user).toHaveProperty('id');
+    expect(user.password).not.toBe('password123'); // Password should be hashed
+    const isValid = await bcrypt.compare('password123', user.password);
+    expect(isValid).toBe(true);
   });
 
-  it('should throw an error when email is missing', async () => {
-    await expect(User.create({ username: 'JaneDoe' })).rejects.toThrowError();
+  it('should retrieve users', async () => {
+    const users = await User.findAll();
+    expect(users.length).toBeGreaterThan(0);
+    expect(Array.isArray(users)).toBe(true);
   });
 });

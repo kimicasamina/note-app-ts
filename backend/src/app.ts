@@ -9,7 +9,7 @@ dotenv.config();
 const app: Application = express();
 
 app.use(express.json());
-app.use('/api/auth', userRoutes);
+app.use('/api/users', userRoutes);
 // Error handling middleware
 app.use(errorMiddleware);
 
