@@ -1,10 +1,10 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
-import Note from './Note';
 
 interface CategoryAttributes {
-  id: string; // UUID
+  id: string;
   name: string;
+  user_id: string;
 }
 
 interface CategoryCreationAttributes
@@ -16,6 +16,7 @@ class Category
 {
   public id!: string;
   public name!: string;
+  public user_id!: string;
 }
 
 Category.init(
@@ -31,14 +32,19 @@ Category.init(
       allowNull: false,
       unique: true,
     },
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: 'users', // Foreign Key referencing `users` table
+        key: 'id',
+      },
+    },
   },
   {
     tableName: 'categories',
-    sequelize,
+    sequelize, // Ensure sequelize instance is passed here
   },
 );
-
-// Associations
-Category.hasMany(Note, { foreignKey: 'categoryId' });
 
 export default Category;

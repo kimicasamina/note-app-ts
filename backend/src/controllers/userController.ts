@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import {
-  createUserInDB,
-  getAllUsersFromDB,
-  getUserByEmail,
-  getUserByIdFromDB,
-  updateUserInDB,
-  deleteUserFromDB,
+  deleteUserService,
+  updateUserService,
+  getUserByIdService,
+  getUserByEmailService,
+  getAllUsersService,
+  createUserService,
 } from '../services/userService';
 import { CustomError } from '../utils/customError';
 
@@ -22,13 +22,13 @@ export const createUser = async (
         400,
       );
     }
-    const existingUser = await getUserByEmail(email);
+    const existingUser = await getUserByEmailService(email);
 
     if (existingUser) {
       throw new CustomError('User already exists.', 401);
     }
 
-    const user = await createUserInDB(username, email, password);
+    const user = await createUserService(username, email, password);
 
     // res.status(201).json(user);
     res.status(200).json({ user, message: 'User created successfully.' });
@@ -43,7 +43,7 @@ export const getUsers = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const users = await getAllUsersFromDB();
+    const users = await getAllUsersService();
     // res.status(200).json(users);
     res.status(200).json({ users, message: 'Users retrieved succcessfully' });
   } catch (error) {
@@ -58,7 +58,7 @@ export const getUserById = async (
 ): Promise<void> => {
   try {
     const userId = req.params.id;
-    const user = await getUserByIdFromDB(userId);
+    const user = await getUserByEmailService(userId);
 
     if (!user) {
       throw new CustomError('User not found', 404);
@@ -83,7 +83,12 @@ export const updateUser = async (
       throw new CustomError('No data to update', 400);
     }
 
-    const updatedUser = await updateUserInDB(userId, username, email, password);
+    const updatedUser = await updateUserService(
+      userId,
+      username,
+      email,
+      password,
+    );
 
     if (!updatedUser) {
       throw new CustomError('User not found', 404);
@@ -102,7 +107,7 @@ export const deleteUser = async (
 ): Promise<void> => {
   try {
     const userId = req.params.id;
-    const result = await deleteUserFromDB(userId);
+    const result = await deleteUserService(userId);
 
     if (!result) {
       throw new CustomError('User not found', 404);

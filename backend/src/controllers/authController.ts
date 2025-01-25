@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { generateToken } from '../utils/jwtUtils';
 import {
-  getUserByEmail,
-  createUserInDB,
-  getUserByIdFromDB,
+  getUserByEmailService,
+  createUserService,
+  getUserByIdService,
 } from '../services/userService';
 import { CustomError } from '../utils/customError';
 import bcrypt from 'bcryptjs';
@@ -22,13 +22,13 @@ export const register = async (
       );
     }
 
-    const existingUser = await getUserByEmail(email);
+    const existingUser = await getUserByEmailService(email);
 
     if (existingUser) {
       throw new CustomError('User already exists.', 401);
     }
 
-    const user = await createUserInDB(username, email, password);
+    const user = await createUserService(username, email, password);
 
     // res.status(201).json(user);
     res.status(200).json({ message: 'User created successfully.' });
@@ -49,7 +49,7 @@ export const login = async (
       throw new CustomError('Email and password are required.', 400);
     }
 
-    const user = await getUserByEmail(email);
+    const user = await getUserByEmailService(email);
 
     if (!user) {
       throw new CustomError('Invalid email or password.', 401);
@@ -100,7 +100,7 @@ export const getUserDetails = async (
     }
 
     const userId = req.user.id; // Safely access user data
-    const user = await getUserByIdFromDB(userId);
+    const user = await getUserByIdService(userId);
 
     if (!user) {
       throw new CustomError('User not found', 404);

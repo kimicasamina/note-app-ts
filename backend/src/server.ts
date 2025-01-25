@@ -1,22 +1,15 @@
-import sequelize from './config/database';
+import { sequelize } from './models';
 import app from './app';
 import User from './models/User';
 
 const PORT = process.env.PORT || 9999;
 
-// Database connection and syncing
+// Test database connection and sync models
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Database connection successful');
-    return sequelize.sync(); // Sync models (optional in dev)
-
-    const user = User.create({
-      username: 'kimi',
-      email: 'kimi@gmail.com',
-      password: '123456789',
-    });
-    console.log('USER', user);
+    console.log('Database connected...');
+    return sequelize.sync({ force: false }); // Set to true for development if you want to reset tables on restart
   })
   .then(() => {
     app.listen(PORT, () => {
@@ -24,5 +17,5 @@ sequelize
     });
   })
   .catch((error) => {
-    console.error('Database connection failed:', error);
+    console.error('Unable to connect to the database:', error);
   });

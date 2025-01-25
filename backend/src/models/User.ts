@@ -2,15 +2,13 @@ import { DataTypes, Model, Optional } from 'sequelize';
 import bcrypt from 'bcryptjs';
 import sequelize from '../config/database';
 
-// Define the attributes for the User model (instance)
 interface UserAttributes {
-  id: string; // UUID
+  id: string;
   username: string;
   email: string;
   password: string;
 }
 
-// Define the creation attributes (which exclude the `id` since it is auto-generated)
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
 class User
@@ -22,13 +20,11 @@ class User
   public email!: string;
   public password!: string;
 
-  // Method to validate the password
   public async validatePassword(password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password);
   }
 }
 
-// Define the User model using Sequelize.define()
 User.init(
   {
     id: {
@@ -54,7 +50,7 @@ User.init(
   },
   {
     tableName: 'users',
-    sequelize, // Pass the Sequelize instance
+    sequelize, // Ensure sequelize instance is passed here
     hooks: {
       beforeCreate: async (user: User) => {
         if (user.password) {

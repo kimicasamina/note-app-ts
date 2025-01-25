@@ -1,14 +1,12 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
-import User from './User';
-import Category from './Category';
 
 interface NoteAttributes {
-  id: string; // UUID
+  id: string;
   title: string;
   content: string;
-  userId: string;
-  categoryId: string;
+  user_id: string;
+  category_id: string;
 }
 
 interface NoteCreationAttributes extends Optional<NoteAttributes, 'id'> {}
@@ -20,8 +18,8 @@ class Note
   public id!: string;
   public title!: string;
   public content!: string;
-  public userId!: string;
-  public categoryId!: string;
+  public user_id!: string;
+  public category_id!: string;
 }
 
 Note.init(
@@ -40,7 +38,7 @@ Note.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    userId: {
+    user_id: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
@@ -48,7 +46,7 @@ Note.init(
         key: 'id',
       },
     },
-    categoryId: {
+    category_id: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
@@ -59,12 +57,8 @@ Note.init(
   },
   {
     tableName: 'notes',
-    sequelize,
+    sequelize, // Ensure sequelize instance is passed here
   },
 );
-
-// Associations
-Note.belongsTo(User, { foreignKey: 'userId' });
-Note.belongsTo(Category, { foreignKey: 'categoryId' });
 
 export default Note;

@@ -6,6 +6,9 @@ import helmet from 'helmet';
 import { errorMiddleware } from './middleware/errorMiddleware';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
+import noteRoutes from './routes/noteRoutes';
+import categoryRoutes from './routes/categoryRoutes';
+
 dotenv.config();
 
 const app: Application = express();
@@ -22,6 +25,8 @@ app.use(express.json());
 // API endpoints
 app.use('/api/users', userRoutes);
 app.use('/api/auths', authRoutes);
+app.use('/api/notes', noteRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // Error handling middleware
 app.use(errorMiddleware);
