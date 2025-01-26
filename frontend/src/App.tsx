@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { fetchMessage } from "./services/api";
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes";
+import ErrorBoundary from "./components/ErrorBoundary";
+import "./styles/main.scss";
 
-const App: React.FC = () => {
-  const [message, setMessage] = useState<string>("");
-
-  useEffect(() => {
-    fetchMessage().then((message) => setMessage(message));
-  }, []);
-
-  return <div>{message}</div>;
-};
+const App = () => (
+  <ErrorBoundary>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  </ErrorBoundary>
+);
 
 export default App;

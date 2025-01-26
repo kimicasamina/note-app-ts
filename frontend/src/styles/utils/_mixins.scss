@@ -1,0 +1,51 @@
+// 1. Flexbox Centering Mixin
+// This mixin helps you center an element both vertically and horizontally using Flexbox.
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 2. Media Query Mixin for Responsive Design
+// This mixin allows you to easily handle media queries.
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media screen and (max-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == tablet {
+    @media screen and (max-width: 1024px) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media screen and (min-width: 1280px) {
+      @content;
+    }
+  }
+}
+
+// 3. Button Styling Mixin
+// A simple mixin for button styles with hover effects.
+@mixin button-style($bg-color, $text-color) {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: $bg-color;
+  color: $text-color;
+  border: none;
+  cursor: pointer;
+  transition: background-dark 0.3s ease;
+
+  &:hover {
+    background-color: darken($bg-color, 10%);
+  }
+}
+
+// 4. Responsive Font Size Mixin
+// This mixin is for adjusting font sizes based on screen size.
+@mixin responsive-font($min-font-size, $max-font-size) {
+  font-size: $min-font-size;
+
+  @media screen and (max-width: 768px) {
+    font-size: $max-font-size;
+  }
+}
