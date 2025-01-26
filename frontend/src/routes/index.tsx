@@ -7,15 +7,15 @@ const Register = lazy(() => import("../pages/Register"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 const PrivateLayout = lazy(() => import("../layouts/PrivateLayout"));
 const GuestLayout = lazy(() => import("../layouts/GuestLayout"));
-import LoadingSpinner from "../components/LoadingSpinner";
+import LoadingDots from "../components/LoadingDots";
 
 const AppRoutes = () => (
-  <Suspense fallback={<LoadingSpinner />}>
+  <Suspense fallback={<LoadingDots />}>
     <Routes>
       <Route element={<GuestLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/signup" element={<Register />} />
       </Route>
 
       <Route element={<PrivateLayout />}></Route>

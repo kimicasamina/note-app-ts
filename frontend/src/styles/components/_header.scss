@@ -1,0 +1,69 @@
+.header {
+  width: 100%;
+  background-color: $background-dark;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 4px 0;
+  @include maxWidth($breakpoint-desktop);
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.header__brand-logo {
+  width: 32px;
+  height: 32px;
+}
+
+.header__brand-name {
+  font-size: 1.5rem;
+  margin-left: 10px;
+  color: $text-light;
+}
+
+.header__user {
+  display: flex;
+  align-items: center;
+}
+
+.header__user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background: $primary-color;
+}
+
+.header__user-name {
+  font-size: 1.2rem;
+  color: $text-light;
+}
+
+.header__auth {
+  display: flex;
+  gap: 8px;
+  margin-left: $spacing-large;
+  // padding: 8px;
+}
+
+.header__auth-button {
+  padding: 4px 8px;
+  border: none;
+  background-color: $background-light;
+  color: $text-dark;
+  border-radius: 16px;
+
+  cursor: pointer;
+}
+
+.header__auth-button:hover {
+  background-color: #0056b3;
+}

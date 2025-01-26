@@ -49,3 +49,29 @@
     font-size: $max-font-size;
   }
 }
+
+// 5. Container and Paddings
+// Add max widths/heights for container and paddings
+@mixin maxWidth($size) {
+  width: 100%;
+  max-width: $size;
+  margin: 0 auto;
+}
+
+@mixin minWidth($size) {
+  min-width: $size;
+}
+
+@mixin maxHeight($size) {
+  min-height: $size;
+}
+
+@mixin spacingY($size) {
+  padding-top: $size;
+  padding-bottom: $size;
+}
+
+@mixin spacingX($size) {
+  padding-left: $size;
+  padding-right: $size;
+}

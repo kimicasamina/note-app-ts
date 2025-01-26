@@ -1,15 +1,20 @@
-// _button.scss: Button component styles
-
 .button {
-  padding: $spacing-small $spacing-medium;
-  font-size: 1rem;
-  border-radius: 4px;
+  padding: $spacing-xsmall $spacing-medium;
+  font-size: $font-xs;
+  font-weight: bold;
+  border-radius: 30px;
+  // width: 60px;
+  // height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   cursor: pointer;
-  background-color: $primary-color;
-  color: white;
+  background-color: $background-light;
+  color: $text-dark;
 
   &:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: darken($background-light, 10%);
+    // transform: scale(1.1);
   }
 }
