@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import AppRoutes from "./routes";
-import ErrorBoundary from "./components/ErrorBoundary";
-import "./styles/main.scss";
+import "./styles/global.css";
+import "./styles/_variables.css";
+import "./styles/_utils.css";
+import "./styles/_animations.css";
+import Home from "./pages/Home";
 
 const App = () => (
-  <ErrorBoundary>
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
-  </ErrorBoundary>
+  <>
+    <Home />
+  </>
 );
 
 export default App;
