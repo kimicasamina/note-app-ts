@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "components/Button/Button";
-import { type User } from "types/custom";
+import { User } from "context/AuthContext";
 import "./index.css";
 
-export default function AuthButton({ user }: { user: User }) {
+type AuthButtonProps = {
+  user: User | null;
+};
+
+export default function AuthButton({ user }: AuthButtonProps) {
   return (
     <div className="header__auth">
-      {user.isAuthenticated ? (
+      {user ? (
         <button className="">Logout</button>
       ) : (
         <>

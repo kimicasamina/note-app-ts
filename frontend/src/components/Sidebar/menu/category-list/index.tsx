@@ -28,11 +28,22 @@ export default function CategoryList({
   );
 }
 
+// Add children to the CategoryItemProps
 type CategoryItemProps = {
   item: ItemProps;
   onSelectMenu: (categoryName: string) => void;
+  children: ReactNode; // Add this line
 };
 
-export function CategoryItem({ item, onSelectMenu }: CategoryItemProps) {
-  return <li onClick={() => onSelectMenu(item.name)}>{item.label}</li>;
+export function CategoryItem({
+  item,
+  onSelectMenu,
+  children,
+}: CategoryItemProps) {
+  return (
+    <li onClick={() => onSelectMenu(item.name)}>
+      {item.label}
+      {children} {/* Render children here */}
+    </li>
+  );
 }

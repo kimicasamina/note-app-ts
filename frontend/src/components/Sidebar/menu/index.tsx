@@ -1,9 +1,10 @@
 import React, { ReactNode } from "react";
-import { type User } from "types/custom";
+import { AuthContextType } from "context/AuthContext";
 import UserAvatar from "./user-avatar";
 import AuthButton from "./auth-btn";
 import "./index.css";
 import CategoryList from "./category-list";
+import { User } from "context/AuthContext";
 
 const Menus = [
   {
@@ -23,16 +24,15 @@ const Menus = [
   },
 ];
 
-export default function Menu({
-  user,
-  onSelectMenu,
-}: {
-  user: User;
+type MenuProps = {
+  user: User | null;
   onSelectMenu: (categoryName: string) => void;
-}): ReactNode {
+};
+
+export default function Menu({ user, onSelectMenu }: MenuProps): ReactNode {
   return (
     <div className="menu">
-      {user.isAuthenticated ? (
+      {user ? (
         <>
           <CategoryList
             items={Menus}

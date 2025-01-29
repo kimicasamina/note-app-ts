@@ -1,16 +1,18 @@
-import Sidebar from "../../components/Sidebar";
 import React from "react";
-import { Outlet, Navigate } from "react-router-dom";
 import "./MainLayout.css";
-import { useAuth } from "../../context/AuthContext";
-import { type User } from "types/custom";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../../components/Sidebar";
+import { useAuthContext } from "../../context/AuthContext";
+
 export default function MainLayout() {
-  const { state } = useAuth();
+  const { user } = useAuthContext(); // Correct hook usage
 
   return (
-    <div className="mainLayout">
-      <Sidebar user={state} />
-      <Outlet />
+    <div className="main__layout">
+      <Sidebar user={user} />
+      <main className="main">
+        <Outlet />
+      </main>
     </div>
   );
 }

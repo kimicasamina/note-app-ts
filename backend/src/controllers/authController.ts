@@ -30,8 +30,17 @@ export const register = async (
 
     const user = await createUserService(username, email, password);
 
-    // res.status(201).json(user);
-    res.status(200).json({ message: 'User created successfully.' });
+    // Generate JWT token and set it in a cookie
+    const token = generateToken(user.id, user.email, user.username);
+    res.cookie('auth_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 24 * 7 * 1000, // 1 week
+    });
+    res
+      .status(200)
+      .json({ user, token, message: 'User registered successfully.' });
   } catch (error) {
     next(error);
   }
@@ -63,14 +72,14 @@ export const login = async (
 
     // Generate JWT token and set it in a cookie
     const token = generateToken(user.id, user.email, user.username);
-    res.cookie('token', token, {
+    res.cookie('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
+      sameSite: 'strict',
       maxAge: 60 * 60 * 24 * 7 * 1000, // 1 week
     });
 
-    res.status(200).json({ message: 'Logged in successfully.' });
+    res.status(200).json({ user, token, message: 'Logged in successfully.' });
   } catch (error) {
     next(error);
   }

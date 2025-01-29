@@ -1,6 +1,6 @@
-.mainLayout {
+.main__layout {
   width: 100vw;
   min-height: 100vh;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 25% 1fr;
 }

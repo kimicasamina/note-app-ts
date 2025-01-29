@@ -1,134 +1,82 @@
-import React, { createContext, useReducer, ReactNode, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import axios from "axios";
+import { getCurrentUser } from "../api/authApi";
 
-// Define the AuthState type, including user's details, loading and error states
-type AuthState = {
-  isAuthenticated: boolean;
-  id: number | null;
-  username: string | null;
-  email: string | null;
-  loading: boolean;
-  error: string | null;
-};
-
-// Define actions: LOGIN with user data, LOGOUT without any data
-type AuthAction =
-  | { type: "LOGIN"; payload: { id: number; username: string; email: string } }
-  | { type: "LOGOUT" }
-  | { type: "SET_LOADING"; loading: boolean }
-  | { type: "SET_ERROR"; error: string | null };
-
-// Initial state with empty user data, loading, and no error
-const initialState: AuthState = {
-  isAuthenticated: false,
-  id: null,
-  username: null,
-  email: null,
-  loading: false,
-  error: null,
-};
-
-// Reducer function to update the state based on the action
-const authReducer = (state: AuthState, action: AuthAction): AuthState => {
-  switch (action.type) {
-    case "LOGIN":
-      return {
-        isAuthenticated: true,
-        id: action.payload.id,
-        username: action.payload.username,
-        email: action.payload.email,
-        loading: false,
-        error: null,
-      };
-    case "LOGOUT":
-      return {
-        isAuthenticated: false,
-        id: null,
-        username: null,
-        email: null,
-        loading: false,
-        error: null,
-      };
-    case "SET_LOADING":
-      return {
-        ...state,
-        loading: action.loading,
-      };
-    case "SET_ERROR":
-      return {
-        ...state,
-        error: action.error,
-      };
-    default:
-      return state;
-  }
-};
-
-// API function to fetch the user and verify the JWT token
-const fetchUser = async (): Promise<{
-  id: number;
-  username: string;
+// Define the type for the user object
+export interface User {
+  id: string;
   email: string;
-}> => {
-  try {
-    const response = await axios.get("/api/user"); // replace with your API endpoint
-    return response.data;
-  } catch (error) {
-    throw new Error("Failed to fetch user data");
-  }
-};
+  username: string;
+}
 
-// Create the context
-const AuthContext = createContext<
-  { state: AuthState; dispatch: React.Dispatch<AuthAction> } | undefined
->(undefined);
+// AuthContext type definition
+export interface AuthContextType {
+  user: User | null;
+  login: (token: string) => void;
+  logout: () => void;
+  isLoading: boolean;
+  isError: boolean;
+  error: any;
+}
 
-// AuthProvider component to wrap the app and provide the context value
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+// Define the props for the AuthProvider component, including children
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
 
-  // Fetch the user data and verify the JWT token using React Query
-  const { isLoading, error, data } = useQuery("user", fetchUser, {
-    enabled: state.isAuthenticated, // Only run the query if the user is authenticated
+// Create AuthContext
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// AuthProvider component
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  // Fetch current user details using react-query
+  const { data, error, isLoading, isError } = useQuery("user", getCurrentUser, {
+    enabled: true, // Always try to fetch user details when the app loads
     onSuccess: (userData) => {
-      // Dispatch login action when user data is fetched
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          id: userData.id,
-          username: userData.username,
-          email: userData.email,
-        },
-      });
+      setUser(userData);
     },
     onError: () => {
-      dispatch({ type: "SET_ERROR", error: "Failed to verify the JWT token" });
+      setUser(null); // Clear user if fetching fails
     },
   });
 
-  useEffect(() => {
-    if (isLoading) {
-      dispatch({ type: "SET_LOADING", loading: true });
-    } else {
-      dispatch({ type: "SET_LOADING", loading: false });
-    }
+  const login = (token: string) => {
+    // Optionally, store the token in localStorage if needed for session state
+    // localStorage.setItem('auth_token', token);
+    // User is already authenticated if the token is in the cookie
+    setUser(data); // Set user when token is verified and fetched
+  };
 
-    if (error) {
-      dispatch({ type: "SET_ERROR", error: "Failed to fetch user data" });
-    }
-  }, [isLoading, error]);
+  const logout = () => {
+    setUser(null);
+    // Optional: Clear localStorage token if you are using it
+    // localStorage.removeItem('auth_token');
+    // You can also add a logout endpoint on the backend to clear cookies
+  };
 
   return (
-    <AuthContext.Provider value={{ state, dispatch }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+        isLoading,
+        isError,
+        error,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Custom hook to access the auth context
-export const useAuth = () => {
-  const context = React.useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within an AuthProvider");
+// Custom hook to use AuthContext
+export const useAuthContext = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuthContext must be used within an AuthProvider");
+  }
   return context;
 };

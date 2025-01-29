@@ -1,25 +1,49 @@
 import React, { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useLogin } from "../../hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const { dispatch } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { mutate: login, isLoading, isError, error } = useLogin();
 
-  const handleLogin = () => {
-    // Perform authentication logic (e.g., API call)
-    dispatch({ type: "LOGIN" });
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    login({ email, password });
+
+    return <Navigate to="/" />;
   };
 
   return (
     <div>
-      <h1>Login</h1>
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
-      />
-      <button onClick={handleLogin}>Login</button>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Logging in..." : "Login"}
+        </button>
+      </form>
+
+      {isError && error instanceof Error && (
+        <p style={{ color: "red" }}>Error: {error.message}</p>
+      )}
     </div>
   );
 }

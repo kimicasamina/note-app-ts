@@ -1,7 +1,11 @@
 import React from "react";
-import { type User } from "types/custom";
+import { User } from "../../../../context/AuthContext";
 
-export default function UserAvatar({ user }: { user: User }) {
+type UserAvatarProps = {
+  user: User;
+};
+
+export default function UserAvatar({ user }: UserAvatarProps) {
   return (
     <div className="">
       <span className="">Hello, {user.username}</span>

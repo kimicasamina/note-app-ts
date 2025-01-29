@@ -1,8 +1,5 @@
-export type User = {
-  isAuthenticated: boolean;
-  id: number | null;
-  username: string | null;
-  email: string | null;
-  loading: boolean;
-  error: string | null;
-};
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+}
