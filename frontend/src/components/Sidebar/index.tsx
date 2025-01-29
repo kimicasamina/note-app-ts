@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 // import CategoryList from "./category-container/category-list";
 // import UserAvatar from "./user-avatar";
@@ -27,29 +27,26 @@ const menus = [
 ];
 
 export default function Sidebar({ user }: { user: User }) {
-  const [selectedMenu, setSelectedMenu] = React.useState<string>("notes");
+  const [selectedMenu, setSelectedMenu] =
+    React.useState<string>("View Categories");
   const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
 
-  const handleOpenMenu = () => {
+  function handleOpenMenu() {
     setIsMenuOpen(!isMenuOpen);
-  };
+  }
 
-  const handleSelectMenu = (e: string) => {
-    setSelectedMenu(e);
-  };
+  function handleSelectCategory(categoryName: string): void {
+    setSelectedMenu(categoryName);
+  }
 
   return (
     <div className="sidebar">
       <span className="icon--small" onClick={handleOpenMenu}>
         menu
-        {/* <HamburgerIcon fill="red" className="" /> */}
       </span>
-      {isMenuOpen ? <Menu user={user} onSelect={handleSelectMenu} /> : null}
-
-      {/* <CategoryList />
-
-      <UserAvatar user={user} />
-      <AuthButton user={user} /> */}
+      {isMenuOpen ? (
+        <Menu user={user} onSelectMenu={handleSelectCategory} />
+      ) : null}
     </div>
   );
 }

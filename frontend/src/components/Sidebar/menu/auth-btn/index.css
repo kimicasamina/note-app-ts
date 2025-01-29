@@ -1,0 +1,16 @@
+.header__auth {
+  justify-self: end;
+  align-self: flex-end;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.header__auth__btn {
+  display: flex;
+  justify-content: center;
+}
+
+.header__auth__btn--login {
+}
