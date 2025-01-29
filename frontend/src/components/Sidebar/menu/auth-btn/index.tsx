@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "../../../../components/Button";
-import { UserProps } from "features/Sidebar/models";
+import Button from "components/Button/Button";
+import { type User } from "types/custom";
 
-export default function AuthButton({ user }: UserProps) {
+export default function AuthButton({ user }: { user: User }) {
   return (
     <div className="header__auth">
       {user ? (
-        <Button className={"button"}>Logout</Button>
+        <button className="">Logout</button>
       ) : (
         <>
           <Link to="/login" className="header__auth--login">

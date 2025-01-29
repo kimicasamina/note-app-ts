@@ -1,7 +1,7 @@
 export type User = {
-  id: number;
-  username: String;
-  email: String;
+  id: string;
+  username: string;
+  email: string;
 };
 
 export interface UserProps {

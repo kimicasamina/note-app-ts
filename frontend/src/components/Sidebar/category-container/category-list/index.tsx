@@ -14,6 +14,7 @@ const category = [
     name: "Journal",
   },
 ];
+
 export default function CategoryList() {
   return (
     <ul className="category">

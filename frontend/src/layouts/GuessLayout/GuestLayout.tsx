@@ -2,7 +2,7 @@ import Header from "../../components/Header/Header";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import "./GuessLayout.css";
-import Sidebar from "../../features/Sidebar";
+import Sidebar from "../../components/Sidebar";
 
 const GuestLayout = () => {
   return (

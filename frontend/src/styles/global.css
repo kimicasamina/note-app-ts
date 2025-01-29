@@ -75,3 +75,9 @@ textarea {
 .btn-secondary:hover {
   background-color: #27ae60;
 }
+
+/* Icons  */
+.icon--small {
+  width: 24px;
+  height: 24px;
+}

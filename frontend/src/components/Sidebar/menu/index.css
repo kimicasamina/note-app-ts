@@ -1,0 +1,20 @@
+.menu {
+}
+
+.menu__title {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.menu__title--heading {
+  font-size: var(--font-size-heading);
+  font-weight: bold;
+}
+
+.menu__title--subheading {
+  font-size: var(--font-size-base);
+  width: 100%;
+  flex-wrap: wrap;
+  text-wrap: pretty;
+}
