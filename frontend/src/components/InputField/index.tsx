@@ -1,25 +1,38 @@
 import React from "react";
+import "./index.css";
 
 interface InputFieldProps {
   label: string;
   type: string;
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
   errorMessage?: string;
+  // Instead of value and onChange, use the register function from react-hook-form
+  register: any; // React Hook Form's register function will be passed here
+  name: string; // Added 'name' to identify the field
 }
 
 export default function InputField({
   label,
   type,
-  value,
-  onChange,
   errorMessage,
+  register,
+  name,
 }: InputFieldProps) {
   return (
-    <div className="input-field">
-      <label>{label}</label>
-      <input type={type} value={value} onChange={onChange} />
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+    <div className="inputField">
+      <label className="inputField__label" htmlFor={name}>
+        {label}
+      </label>
+      <input
+        className="inputField__input"
+        type={type}
+        id={name}
+        {...register(name)}
+      />
+      {errorMessage && (
+        <p className="inputField__error" style={{ color: "red" }}>
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 }

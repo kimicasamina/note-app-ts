@@ -1,0 +1,19 @@
+.inputField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-unit);
+  width: 350px;
+}
+
+.inputField__input {
+  font-size: var(--font-size-sm);
+}
+
+.inputField__label {
+  font-weight: bold;
+  font-size: var(--font-size-xs);
+}
+
+.inputField__error {
+  color: var(--alert);
+}

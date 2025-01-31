@@ -1,6 +1,6 @@
 // components/menu.tsx
 import React, { ReactNode } from "react";
-import { useCurrentUser } from "@hooks/useAuth";
+import { useCurrentUser } from "@hooks/useUser";
 import UserAvatar from "./user-avatar";
 import AuthButton from "./auth-btn";
 import CategoryList from "./category-list";
@@ -31,9 +31,14 @@ export default function Menu({
 }): ReactNode {
   const { data: user, isLoading, isError } = useCurrentUser();
 
+  console.log("FECTHING...", user);
+
   // Loading state
   if (isLoading) {
     return <h1>Loading user data...</h1>;
+  }
+  if (!isLoading) {
+    console.log("DONE FETCHING...", user);
   }
 
   // Error state (e.g., invalid token)

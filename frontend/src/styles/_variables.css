@@ -9,10 +9,16 @@
   --bg-dark: #000000;
   --bg-light: #f8f8f8;
   --gray: #535252;
+  --alert: #e52929;
 
   /* Spacing */
   --spacing-unit: 1rem;
-  --font-size-base: 16px;
+  --font-size-xs: 14px;
+  --font-size-sm: 16px;
+  --font-size-base: 18px;
+  --font-size-md: 21px;
+  --font-size-lg: 26px;
+  --font-size-xl: 32px;
   --font-size-heading: 2rem;
   --border-radius: 0.3rem;
 }

@@ -42,7 +42,7 @@ export function CategoryItem({
 }: CategoryItemProps) {
   return (
     <li onClick={() => onSelectMenu(item.name)}>
-      {item.label}
+      {/* {item.label} */}
       {children} {/* Render children here */}
     </li>
   );

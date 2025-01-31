@@ -37,6 +37,9 @@ export const getUserByIdService = async (id: string): Promise<any> => {
     // Attempt to find the user by ID with associated notes and categories
     const user = await User.findOne({
       where: { id },
+      attributes: {
+        exclude: ['password', 'createdAt', 'updatedAt'], // Exclude these fields from the user model
+      },
       include: [
         {
           model: Note,
@@ -51,12 +54,12 @@ export const getUserByIdService = async (id: string): Promise<any> => {
         {
           model: Category,
           as: 'categories', // Include user's associated categories
-          include: [
-            {
-              model: Note,
-              as: 'notes', // Include category for each note
-            },
-          ],
+          // include: [
+          //   {
+          //     model: Note,
+          //     as: 'notes', // Include category for each note
+          //   },
+          // ],
         },
       ],
     });
