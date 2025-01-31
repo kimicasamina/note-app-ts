@@ -1,10 +1,10 @@
+// components/menu.tsx
 import React, { ReactNode } from "react";
-import { AuthContextType } from "context/AuthContext";
+import { useCurrentUser } from "@hooks/useAuth";
 import UserAvatar from "./user-avatar";
 import AuthButton from "./auth-btn";
-import "./index.css";
 import CategoryList from "./category-list";
-import { User } from "context/AuthContext";
+import "./index.css";
 
 const Menus = [
   {
@@ -24,12 +24,23 @@ const Menus = [
   },
 ];
 
-type MenuProps = {
-  user: User | null;
+export default function Menu({
+  onSelectMenu,
+}: {
   onSelectMenu: (categoryName: string) => void;
-};
+}): ReactNode {
+  const { data: user, isLoading, isError } = useCurrentUser();
 
-export default function Menu({ user, onSelectMenu }: MenuProps): ReactNode {
+  // Loading state
+  if (isLoading) {
+    return <h1>Loading user data...</h1>;
+  }
+
+  // Error state (e.g., invalid token)
+  // if (isError || !user) {
+  //   return <h1>Error loading user data. Please log in again.</h1>;
+  // }
+
   return (
     <div className="menu">
       {user ? (

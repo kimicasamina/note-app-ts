@@ -1,12 +1,9 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCurrentUser } from "@hooks/useAuth";
 import "./index.css";
-// import CategoryList from "./category-container/category-list";
-// import UserAvatar from "./user-avatar";
-// import AuthButton from "./auth-btn";
+import { CgMenuLeft } from "react-icons/cg";
 
-import { User } from "context/AuthContext";
-import { useAuthContext } from "context/AuthContext";
-import HamburgerIcon from "../../assets/svg/HambugerIcon";
 import Menu from "./menu";
 
 const menus = [
@@ -27,14 +24,11 @@ const menus = [
   },
 ];
 
-type SidebarProps = {
-  user: User | null;
-};
+export default function Sidebar() {
+  const navigate = useNavigate();
 
-export default function Sidebar({ user }: SidebarProps) {
-  const [selectedMenu, setSelectedMenu] =
-    React.useState<string>("View Categories");
-  const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
+  const [selectedMenu, setSelectedMenu] = useState("View Categories");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function handleOpenMenu() {
     setIsMenuOpen(!isMenuOpen);
@@ -47,11 +41,9 @@ export default function Sidebar({ user }: SidebarProps) {
   return (
     <div className="sidebar">
       <span className="icon--small" onClick={handleOpenMenu}>
-        menu
+        <CgMenuLeft />
       </span>
-      {isMenuOpen ? (
-        <Menu user={user} onSelectMenu={handleSelectCategory} />
-      ) : null}
+      {isMenuOpen ? <Menu onSelectMenu={handleSelectCategory} /> : null}
     </div>
   );
 }

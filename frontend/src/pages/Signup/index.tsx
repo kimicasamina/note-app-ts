@@ -1,58 +1,62 @@
-import React, { useState } from "react";
-import { useRegister } from "../../hooks/useAuth";
-import { Navigate } from "react-router-dom";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema } from "@utils/validations/authSchema";
+import { useRegister } from "@hooks/useAuth"; // Assume useRegister hook is set up
+import InputField from "@components/InputField";
+import Button from "@components/Button/Button";
+
+interface SignupFormValues {
+  email: string;
+  username: string;
+  password: string;
+}
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const { mutate: register, isLoading, isError, error } = useRegister();
+  const {
+    register: formRegister,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupFormValues>({
+    resolver: zodResolver(signupSchema),
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    register({ username, email, password });
-    return <Navigate to="/" />
+  const onSubmit = (data: SignupFormValues) => {
+    register(data); // Call the register mutation
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Registering..." : "Register"}
-        </button>
-      </form>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <h2>Signup</h2>
 
-      {isError && error instanceof Error && (
-        <p style={{ color: "red" }}>Error: {error.message}</p>
-      )}
-    </div>
+      <InputField
+        label="Username"
+        type="text"
+        value=""
+        onChange={() => {}}
+        errorMessage={errors.username?.message}
+        {...formRegister("username")}
+      />
+      <InputField
+        label="Email"
+        type="email"
+        value=""
+        onChange={() => {}}
+        errorMessage={errors.email?.message}
+        {...formRegister("email")}
+      />
+      <InputField
+        label="Password"
+        type="password"
+        value=""
+        onChange={() => {}}
+        errorMessage={errors.password?.message}
+        {...formRegister("password")}
+      />
+
+      <Button label="Signup" isLoading={isLoading} />
+      {isError && <p style={{ color: "red" }}>{error?.message}</p>}
+    </form>
   );
 }

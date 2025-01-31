@@ -1,19 +1,20 @@
-import React, { ReactElement } from "react";
+// components/Button.tsx
+import React from "react";
 
 interface ButtonProps {
-  className?: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  children: React.ReactNode;
+  label: string;
+  isLoading: boolean;
+  type?: "button" | "submit";
 }
 
 export default function Button({
-  className,
-  onClick,
-  children,
-}: ButtonProps): ReactElement {
+  label,
+  isLoading,
+  type = "submit",
+}: ButtonProps) {
   return (
-    <button className={className} onClick={onClick}>
-      {children}
+    <button type={type} disabled={isLoading}>
+      {isLoading ? "Please wait..." : label}
     </button>
   );
 }

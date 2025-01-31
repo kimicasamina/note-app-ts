@@ -1,10 +1,3 @@
-// {
-//   "files": [],
-//   "references": [
-//     { "path": "./tsconfig.app.json" },
-//     { "path": "./tsconfig.node.json" }
-//   ]
-// }
 {
   "compilerOptions": {
     "target": "ESNext",
@@ -17,8 +10,23 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "outDir": "./dist",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@assets/*": ["assets/*"],
+      "@layouts/*": ["layouts/*"],
+      "@pages/*": ["pages/*"],
+      "@router/*": ["router/*"],
+      "@hooks/*": ["hooks/*"],
+      "@features/*": ["features/*"],
+      "@context/*": ["context/*"],
+      "@api/*": ["api/*"],
+      "@styles/*": ["styles/*"],
+      "@utils/*": ["utils/*"]
+    },
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "types": ["vite/client"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "types/**/*"], // Ensure types folder is included
   "exclude": ["node_modules", "dist"]
 }

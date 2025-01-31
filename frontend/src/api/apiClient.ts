@@ -1,7 +1,8 @@
 // src/api/apiClient.ts
 import axios, { AxiosInstance } from "axios";
 
-const BASE_URL: string = "http://localhost:9090/api";
+const BASE_URL: string = import.meta.env.VITE_API_URL;
+
 const apiClient: AxiosInstance = axios.create({
   baseURL: BASE_URL, // Replace with your API's base URL
   headers: {

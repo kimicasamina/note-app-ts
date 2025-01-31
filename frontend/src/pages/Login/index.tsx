@@ -1,49 +1,53 @@
-import React, { useState } from "react";
-import { useLogin } from "../../hooks/useAuth";
-import { Navigate } from "react-router-dom";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@utils/validations/authSchema";
+import { useLogin } from "@hooks/useAuth"; // assuming you have a useLogin hook
+import InputField from "@components/InputField";
+import Button from "@components/Button/Button";
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { mutate: login, isLoading, isError, error } = useLogin();
+  const { mutate: login, isLoading, isError, error } = useLogin(); // Assume login mutation is set up with react-query
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    login({ email, password });
-
-    return <Navigate to="/" />;
+  const onSubmit = (data: LoginFormValues) => {
+    login(data); // Call the login mutation
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Logging in..." : "Login"}
-        </button>
-      </form>
 
-      {isError && error instanceof Error && (
-        <p style={{ color: "red" }}>Error: {error.message}</p>
-      )}
-    </div>
+      <InputField
+        label="Email"
+        type="email"
+        value=""
+        onChange={() => {}}
+        errorMessage={errors.email?.message}
+        {...register("email")}
+      />
+      <InputField
+        label="Password"
+        type="password"
+        value=""
+        onChange={() => {}}
+        errorMessage={errors.password?.message}
+        {...register("password")}
+      />
+
+      <Button label="Login" isLoading={isLoading} />
+      {isError && <p style={{ color: "red" }}>{error?.message}</p>}
+    </form>
   );
 }

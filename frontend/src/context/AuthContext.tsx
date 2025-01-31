@@ -42,14 +42,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     },
   });
 
-  const login = (token: string) => {
+  const login = (user: User): void => {
     // Optionally, store the token in localStorage if needed for session state
     // localStorage.setItem('auth_token', token);
     // User is already authenticated if the token is in the cookie
-    setUser(data); // Set user when token is verified and fetched
+    setUser(user); // Set user when token is verified and fetched
   };
 
-  const logout = () => {
+  const logout = (): void => {
     setUser(null);
     // Optional: Clear localStorage token if you are using it
     // localStorage.removeItem('auth_token');

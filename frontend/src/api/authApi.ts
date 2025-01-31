@@ -1,50 +1,47 @@
-// src/api/authApi.ts
 import apiClient from "./apiClient";
 
-interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
-interface RegisterCredentials {
+interface User {
+  id: string;
   username: string;
   email: string;
-  password: string;
 }
 
 interface AuthResponse {
-  token: string;
-  user: {
-    id: string;
-    email: string;
-    name: string;
-  };
+  user: User;
 }
 
-// Register request
-export const register = async (
-  credentials: RegisterCredentials
-): Promise<any> => {
-  const response = await apiClient.post("/auths/register", credentials);
+// Login function
+export const login = async (credentials: {
+  email: string;
+  password: string;
+}): Promise<AuthResponse> => {
+  const response = await apiClient.post("/api/auths/login", credentials, {
+    withCredentials: true, // Make sure cookies are included in the request
+  });
   return response.data;
 };
 
-// Login request
-export const login = async (
-  credentials: LoginCredentials
-): Promise<AuthResponse> => {
-  const response = await apiClient.post("/auths/login", credentials);
+// Register function
+export const register = async (credentials: {
+  email: string;
+  username: string;
+  password: string;
+}): Promise<AuthResponse> => {
+  const response = await apiClient.post("/api/auths/register", credentials, {
+    withCredentials: true, // Make sure cookies are included in the request
+  });
   return response.data;
 };
 
-// Fetch current user details
-export const getCurrentUser = async (): Promise<AuthResponse["user"]> => {
-  const response = await apiClient.get("/auths/me");
-  return response.data;
-};
-
-// Logout request
-export const logout = async (): Promise<any> => {
-  const response = await apiClient.delete("/auths/logout");
-  return response.data;
+// Get current user function (will use the cookie)
+export const getCurrentUser = async (): Promise<User | null> => {
+  try {
+    const response = await apiClient.get("/api/auths/me", {
+      withCredentials: true, // Make sure cookies are included
+    });
+    return response.data; // Return user if the token is valid
+  } catch (error) {
+    console.error("Error fetching current user:", error);
+    return null; // If the token is invalid, return null
+  }
 };

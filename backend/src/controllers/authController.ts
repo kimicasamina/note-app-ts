@@ -38,9 +38,7 @@ export const register = async (
       sameSite: 'strict',
       maxAge: 60 * 60 * 24 * 7 * 1000, // 1 week
     });
-    res
-      .status(200)
-      .json({ user, token, message: 'User registered successfully.' });
+    res.status(200).json({ message: 'User registered successfully.' });
   } catch (error) {
     next(error);
   }
@@ -79,7 +77,7 @@ export const login = async (
       maxAge: 60 * 60 * 24 * 7 * 1000, // 1 week
     });
 
-    res.status(200).json({ user, token, message: 'Logged in successfully.' });
+    res.status(200).json({ message: 'Logged in successfully.' });
   } catch (error) {
     next(error);
   }

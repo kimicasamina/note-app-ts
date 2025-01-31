@@ -1,15 +1,13 @@
 import React from "react";
-import "./MainLayout.css";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
-import { useAuthContext } from "../../context/AuthContext";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { useNavigate } from "react-router-dom";
 
 export default function MainLayout() {
-  const { user } = useAuthContext(); // Correct hook usage
-
   return (
     <div className="main__layout">
-      <Sidebar user={user} />
+      <Sidebar />
       <main className="main">
         <Outlet />
       </main>
