@@ -51,7 +51,7 @@ export default function Brand() {
         />
       </svg>
 
-      <span className="brand__name">N.O.T.E.D</span>
+      <span className="brand__name">+pad</span>
     </Link>
   );
 }

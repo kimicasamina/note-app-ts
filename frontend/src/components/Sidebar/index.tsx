@@ -55,7 +55,7 @@ export default function Sidebar() {
               <>
                 <div className="sidebar__welcome">
                   <h1 className="sidebar__welcome--title">
-                    Welcome to Noted App!
+                    Welcome to our App!
                   </h1>
                   <p className="sidebar__welcome--subtitle">
                     Sign up and log in to access all the features and start
