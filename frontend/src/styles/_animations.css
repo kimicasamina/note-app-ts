@@ -20,6 +20,40 @@
   }
 }
 
+/* Wiggle Effect */
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg); /* Start and end with no rotation */
+  }
+  25% {
+    transform: rotate(15deg); /* Rotate clockwise */
+  }
+  50% {
+    transform: rotate(-15deg); /* Rotate counter-clockwise */
+  }
+  75% {
+    transform: rotate(10deg); /* Rotate clockwise again */
+  }
+}
+
+/* Jiggle Effect */
+@keyframes jiggle {
+  0%,
+  100% {
+    transform: translateX(0); /* Start and end at the original position */
+  }
+  25% {
+    transform: translateX(-10px); /* Move left */
+  }
+  50% {
+    transform: translateX(10px); /* Move right */
+  }
+  75% {
+    transform: translateX(-5px); /* Slightly move left */
+  }
+}
+
 /* Animation classes */
 .fade-in {
   animation: fadeIn 1s ease-in-out;
@@ -27,4 +61,11 @@
 
 .slide-up {
   animation: slideUp 0.8s ease-out;
+}
+
+.wiggle-jiggle {
+  display: inline-block;
+  animation:
+    wiggle 0.8s ease-in-out infinite,
+    jiggle 1s ease-in-out infinite;
 }

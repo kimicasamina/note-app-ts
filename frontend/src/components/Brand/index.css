@@ -1,0 +1,57 @@
+/* Base styling for .brand */
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-bottom: 16px;
+  background-color: var(--secondary-color);
+  border-radius: 2.2px;
+  padding: 4px 8px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+  margin-bottom: 16px;
+}
+
+/* On hover over the .brand, apply animation to .brand__logo */
+.brand:hover > .brand__logo {
+  display: inline-block;
+  animation: shake 0.6s ease-in-out forwards;
+}
+
+/* .brand__logo styling */
+.brand__logo {
+  margin-right: 4px;
+  width: 24px;
+  height: 24px;
+}
+
+/* .brand__name styling */
+.brand__name {
+  font-size: var(--font-size-xs);
+  letter-spacing: 2.3px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dark);
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+/* Smooth Shake Animation */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+}

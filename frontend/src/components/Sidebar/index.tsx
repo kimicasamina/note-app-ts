@@ -2,12 +2,12 @@ import React, { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 import { CgMenuLeft } from "react-icons/cg";
-import { User } from "types/types";
 
 import { useAuth } from "@context/authContext";
 import CategoryList from "@components/CategoriesList";
 import UserAvatar from "@components/UserAvatar";
 import AuthButton from "@components/AuthButton";
+import Brand from "@components/Brand";
 
 const menus = [
   {
@@ -42,26 +42,31 @@ export default function Sidebar() {
         <CgMenuLeft />
       </span>
       {isSidebar ? (
-        <div className="sidebar__container">
-          {user ? (
-            <>
-              <CategoryList />
-              <UserAvatar user={user} />
-              <AuthButton user={user} />
-            </>
-          ) : (
-            <>
-              <div className="sidebar__welcome">
-                <h1 className="sidebar__welcome--title">Welcome to Our App!</h1>
-                <p className="sidebar__welcome--subtitle">
-                  Sign up and log in to access all the features and start
-                  managing your notes.
-                </p>
-              </div>
-              <AuthButton user={user} />
-            </>
-          )}
-        </div>
+        <>
+          <Brand />
+          <div className="sidebar__container">
+            {user ? (
+              <>
+                <CategoryList />
+                <UserAvatar user={user} />
+                <AuthButton user={user} />
+              </>
+            ) : (
+              <>
+                <div className="sidebar__welcome">
+                  <h1 className="sidebar__welcome--title">
+                    Welcome to Noted App!
+                  </h1>
+                  <p className="sidebar__welcome--subtitle">
+                    Sign up and log in to access all the features and start
+                    managing your notes.
+                  </p>
+                </div>
+                <AuthButton user={user} />
+              </>
+            )}
+          </div>
+        </>
       ) : null}
     </div>
   );

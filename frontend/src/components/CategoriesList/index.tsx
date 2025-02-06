@@ -3,8 +3,11 @@ import "./index.css";
 import { useQuery } from "react-query";
 import { getCategoriesApi } from "@api/categoriesApi";
 import LoadingDots from "@components/LoadingDots/LoadingDots";
+import useCategory from "@hooks/useCategory";
+import { useSelectedItem } from "@context/selectedItemContext";
 
 export default function CategoryList() {
+  const { selectedCategory, onSelectCategory } = useSelectedItem();
   const {
     data: categories,
     isLoading,
@@ -13,7 +16,7 @@ export default function CategoryList() {
   } = useQuery("categories", getCategoriesApi, {
     // refetchOnWindowFocus: false, // Prevent refetching when window is focused
     // refetchOnMount: false, // Prevent refetching when component is mounted
-    // staleTime: Infinity, // Prevent data from becoming stale
+    // staleTime: 8000, // Prevent data from becoming stale
   });
 
   if (isLoading) {
@@ -35,7 +38,11 @@ export default function CategoryList() {
     <div className="category-list">
       <ul>
         {categories?.map((category: { id: string; name: string }) => (
-          <li className="category-item active" key={category.id}>
+          <li
+            className={`category-item ${selectedCategory == category.id ? "active" : null}`}
+            key={category.id}
+            onClick={() => onSelectCategory(category.id)}
+          >
             {category.name}
           </li>
         ))}

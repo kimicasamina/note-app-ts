@@ -6,7 +6,7 @@
 
 /* Style for each category item */
 .category-item {
-  padding: 8px;
+  padding: 8px 16px;
   /* border-bottom: 1px solid var(--text-); */
   font-size: var(--font-size-md);
   cursor: pointer;
@@ -15,7 +15,6 @@
   font-weight: 600;
   border-radius: 8px;
   margin-bottom: 4px;
-  position: relative;
 }
 
 /* Hover effect for each category item */
@@ -25,14 +24,36 @@
   border-radius: 8px;
 }
 
-.category-item.active::after {
-  width: 4px;
-  height: 20px;
+/* Active category item */
+.category-item.active {
+  position: relative;
+}
+
+/* Vertical white line on active category item */
+/* Vertical white line on active category item */
+.category-item.active::before {
+  content: "";
   position: absolute;
-  background-color: var(--bg-light);
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; /* Position the line horizontally at the center */
+  top: 50%; /* Position the line vertically at the center */
+  width: 4px; /* Width of the line */
+  height: 0; /* Initial height of the line (collapsed state) */
+  background-color: white;
+  border-radius: 8px;
+  transform: translateY(
+    -50%
+  ); /* Center the line both vertically and horizontally */
+  animation: expandLine 0.3s forwards; /* Apply the animation */
+}
+
+/* Keyframes for the vertical line animation */
+@keyframes expandLine {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 24px; /* Expanded height */
+  }
 }
 
 /* Error handling styles */
