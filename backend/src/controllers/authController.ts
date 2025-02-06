@@ -38,7 +38,18 @@ export const register = async (
       sameSite: 'none',
       maxAge: 60 * 60 * 24 * 7 * 1000, // 1 week
     });
-    res.status(200).json({ message: 'User registered successfully.' });
+
+    const docs = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      notes: user.notes,
+      categories: user.categories,
+    };
+
+    res
+      .status(200)
+      .json({ user: docs, message: 'User registered successfully.' });
   } catch (error) {
     next(error);
   }
@@ -71,13 +82,21 @@ export const login = async (
     // Generate JWT token and set it in a cookie
     const token = generateToken(user.id, user.email, user.username);
     res.cookie('auth_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
+      httpOnly: true, // Ensures the cookie is not accessible via JavaScript
+      secure: process.env.NODE_ENV === 'production', // Ensure it’s only sent over HTTPS in production
+      sameSite: 'none', // For cross-origin cookies
       maxAge: 60 * 60 * 24 * 7 * 1000, // 1 week
     });
 
-    res.status(200).json({ message: 'Logged in successfully.' });
+    const docs = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      notes: user.notes,
+      categories: user.categories,
+    };
+
+    res.status(200).json({ user: docs, message: 'Logged in successfully.' });
   } catch (error) {
     next(error);
   }

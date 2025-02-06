@@ -1,15 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "components/Button/Button";
-import { User } from "context/AuthContext";
+import { User } from "types/types";
 
 import "./index.css";
-
-type User = {
-  id: string;
-  email: string;
-  username: string;
-};
 
 type AuthButtonProps = {
   user: User | null;

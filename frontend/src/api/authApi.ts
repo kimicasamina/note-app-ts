@@ -1,79 +1,53 @@
-import apiClient from "./apiClient";
-import { User, Category, Note } from "types/types";
+import axiosClient from "./apiClient";
+import { User } from "types/types";
+
+// Define the response types for login, register, etc.
 
 interface AuthResponse {
   user: User;
+  token: string;
 }
 
-// Login function
-export const login = async (credentials: {
+interface GetCurrentUserResponse {
+  user: User | null;
+}
+
+export const login = async (loginValues: {
   email: string;
   password: string;
-}): Promise<any> => {
-  const response = await apiClient.post("/api/auths/login", credentials);
-  return response.data;
+}): Promise<AuthResponse> => {
+  const response = await axiosClient.post("/api/auths/login", loginValues, {
+    withCredentials: true,
+  });
+  return response.data; // We expect response.data to contain user and token
 };
 
-// Register function
-export const register = async (credentials: {
+export const register = async (registerValues: {
   email: string;
   username: string;
   password: string;
-}): Promise<any> => {
-  const response = await apiClient.post("/api/auths/register", credentials);
-  return response.data;
-};
-
-// Fetch current user
-export const getCurrentUser = async (): Promise<User | null> => {
-  try {
-    const response = await apiClient.get("/api/auths/me", {
-      withCredentials: true,
-    });
-    return response.data; // Return user data
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    return null;
-  }
-};
-
-// Notes API
-export const addNote = async (noteData: Omit<Note, "id">): Promise<Note> => {
-  const response = await apiClient.post("/api/notes", noteData);
-  return response.data;
-};
-
-export const updateNote = async (
-  noteId: string,
-  noteData: Partial<Note>
-): Promise<Note> => {
-  const response = await apiClient.put(`/api/notes/${noteId}`, noteData);
-  return response.data;
-};
-
-export const deleteNote = async (noteId: string): Promise<void> => {
-  await apiClient.delete(`/api/notes/${noteId}`);
-};
-
-// Categories API
-export const addCategory = async (
-  categoryData: Omit<Category, "id">
-): Promise<Category> => {
-  const response = await apiClient.post("/api/categories", categoryData);
-  return response.data;
-};
-
-export const updateCategory = async (
-  categoryId: string,
-  categoryData: Partial<Category>
-): Promise<Category> => {
-  const response = await apiClient.put(
-    `/api/categories/${categoryId}`,
-    categoryData
+}): Promise<AuthResponse> => {
+  const response = await axiosClient.post(
+    "/api/auths/register",
+    registerValues,
+    { withCredentials: true }
   );
-  return response.data;
+  return response.data; // We expect response.data to contain user and token
 };
 
-export const deleteCategory = async (categoryId: string): Promise<void> => {
-  await apiClient.delete(`/api/categories/${categoryId}`);
+export const getCurrentUser =
+  async (): Promise<GetCurrentUserResponse | null> => {
+    try {
+      const response = await axiosClient.get("/api/auths/me", {
+        withCredentials: true,
+      });
+      return response.data; // We expect response.data to contain the current user or null
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      return null; // If not authenticated, return null
+    }
+  };
+
+export const logout = async (): Promise<void> => {
+  await axiosClient.delete("/api/auths/logout", { withCredentials: true });
 };

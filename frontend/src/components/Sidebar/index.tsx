@@ -1,9 +1,8 @@
 import React, { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCurrentUser } from "@hooks/useAuth";
 import "./index.css";
 import { CgMenuLeft } from "react-icons/cg";
-
+import { User } from "types/types";
 import Menu from "./menu";
 
 const menus = [
@@ -26,7 +25,6 @@ const menus = [
 
 export default function Sidebar() {
   const navigate = useNavigate();
-
   const [selectedMenu, setSelectedMenu] = useState("View Categories");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

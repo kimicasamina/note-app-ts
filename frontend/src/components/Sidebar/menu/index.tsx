@@ -1,10 +1,10 @@
 // components/menu.tsx
-import React, { ReactNode } from "react";
-import { useCurrentUser } from "@hooks/useUser";
+import React, { ReactNode, useEffect, useState } from "react";
 import UserAvatar from "./user-avatar";
 import AuthButton from "./auth-btn";
 import CategoryList from "./category-list";
 import "./index.css";
+import { useAuth } from "@context/authContext";
 
 const Menus = [
   {
@@ -29,22 +29,11 @@ export default function Menu({
 }: {
   onSelectMenu: (categoryName: string) => void;
 }): ReactNode {
-  const { data: user, isLoading, isError } = useCurrentUser();
+  const { user, loading } = useAuth();
 
-  console.log("FECTHING...", user);
-
-  // Loading state
-  if (isLoading) {
-    return <h1>Loading user data...</h1>;
+  if (loading) {
+    return <h1 className="">Loading user data...</h1>;
   }
-  if (!isLoading) {
-    console.log("DONE FETCHING...", user);
-  }
-
-  // Error state (e.g., invalid token)
-  // if (isError || !user) {
-  //   return <h1>Error loading user data. Please log in again.</h1>;
-  // }
 
   return (
     <div className="menu">
@@ -66,7 +55,7 @@ export default function Menu({
               sign in to start and create a new note.
             </span>
           </h3>
-          <AuthButton user={user} />
+          <AuthButton user={null} />
         </>
       )}
     </div>

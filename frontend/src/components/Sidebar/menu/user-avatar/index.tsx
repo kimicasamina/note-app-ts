@@ -1,9 +1,9 @@
 import React from "react";
-import { User } from "../../../../context/AuthContext";
 import { CgProfile } from "react-icons/cg";
+import { User } from "types/types";
 import "./index.css";
 type UserAvatarProps = {
-  user: User;
+  user: User | null;
 };
 
 export default function UserAvatar({ user }: UserAvatarProps) {
@@ -12,7 +12,7 @@ export default function UserAvatar({ user }: UserAvatarProps) {
       <span className="">
         <CgProfile />
       </span>
-      <span className="">{user.username}</span>
+      <span className="">{user?.username}</span>
     </div>
   );
 }

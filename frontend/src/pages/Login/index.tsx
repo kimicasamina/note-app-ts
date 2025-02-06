@@ -1,45 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@utils/validations/authSchema";
-import { useLogin } from "@hooks/useAuth";
+import { useAuth } from "@context/authContext";
 import InputField from "@components/InputField";
 import Button from "@components/Button/Button";
 import { useNavigate } from "react-router-dom";
-import { useCurrentUser } from "@hooks/useUser";
+
 interface LoginFormValues {
   email: string;
   password: string;
 }
 
 export default function Login() {
-  const { mutate: login, isLoading, isError, error } = useLogin();
+  const { login, user, loading: authLoading } = useAuth();
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { data: user, isLoading: isFetching } = useCurrentUser();
-
-  if (user) {
-    navigate("/", { replace: true });
-  }
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: LoginFormValues) => {
-    login(data, {
-      onSuccess: () => {
-        // After reload, navigate to the home page
-        // navigate("/", { replace: true });
-        // Refresh the page
-        window.location.reload();
-      },
-    });
+  const onSubmit = async (data: LoginFormValues) => {
+    setError(null); // Reset any previous errors
+
+    try {
+      await login(data.email, data.password);
+      navigate("/");
+    } catch (err: any) {
+      setError(err.message || "An error occurred during login");
+    }
   };
+
+  // Redirect if user is already authenticated
+  useEffect(() => {
+    if (user && !authLoading) {
+      navigate("/");
+    }
+  }, [user, authLoading, navigate]);
 
   return (
     <form className="login" onSubmit={handleSubmit(onSubmit)}>
@@ -61,9 +64,8 @@ export default function Login() {
         register={register}
       />
 
-      <Button label="Login" isLoading={isLoading} />
-
-      {isError && <p style={{ color: "red" }}>{error?.message}</p>}
+      <Button label="Login" type="submit" isLoading={isSubmitting} />
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </form>
   );
 }
