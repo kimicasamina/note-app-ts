@@ -66,7 +66,12 @@ export default function Signup() {
         register={formRegister}
       />
 
-      <Button label="Signup" type="submit" isLoading={isSubmitting} />
+      <Button
+        label="Signup"
+        type="submit"
+        isLoading={isSubmitting}
+        onClick={handleSubmit(onSubmit)}
+      />
       {error && <p style={{ color: "red" }}>{error}</p>}
     </form>
   );

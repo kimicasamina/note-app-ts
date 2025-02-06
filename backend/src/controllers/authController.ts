@@ -35,8 +35,8 @@ export const register = async (
     res.cookie('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
-      maxAge: 60 * 60 * 24 * 7 * 1000, // 1 week
+      // sameSite: 'strict',
+      // maxAge: 60 * 60 * 24 * 7 * 1000, // 1 week
     });
 
     const docs = {
@@ -81,11 +81,11 @@ export const login = async (
 
     // Generate JWT token and set it in a cookie
     const token = generateToken(user.id, user.email, user.username);
+
+    // Set token in HTTP-only cookie
     res.cookie('auth_token', token, {
-      httpOnly: true, // Ensures the cookie is not accessible via JavaScript
-      secure: process.env.NODE_ENV === 'production', // Ensure it’s only sent over HTTPS in production
-      sameSite: 'none', // For cross-origin cookies
-      maxAge: 60 * 60 * 24 * 7 * 1000, // 1 week
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
     });
 
     const docs = {
@@ -108,7 +108,7 @@ export const logout = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    res.clearCookie('token'); // Clear the JWT token from cookies
+    res.clearCookie('auth_token');
     res.status(200).json({ message: 'Logged out successfully.' });
   } catch (error) {
     next(error);

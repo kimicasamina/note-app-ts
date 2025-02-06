@@ -8,11 +8,9 @@ type UserAvatarProps = {
 
 export default function UserAvatar({ user }: UserAvatarProps) {
   return (
-    <div className="userAvatar">
-      <span className="">
-        <CgProfile />
-      </span>
-      <span className="">{user?.username}</span>
+    <div className="user">
+      <CgProfile className="user__icon" />
+      <span className="user__name">{user?.username}</span>
     </div>
   );
 }

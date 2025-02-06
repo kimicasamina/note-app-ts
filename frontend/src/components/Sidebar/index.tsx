@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 import { CgMenuLeft } from "react-icons/cg";
 import { User } from "types/types";
-import Menu from "./menu";
+
+import { useAuth } from "@context/authContext";
+import CategoryList from "@components/CategoriesList";
+import UserAvatar from "@components/UserAvatar";
+import AuthButton from "@components/AuthButton";
 
 const menus = [
   {
@@ -24,24 +28,41 @@ const menus = [
 ];
 
 export default function Sidebar() {
+  const { user } = useAuth();
+  const [isSidebar, setIsSidebar] = useState(false);
   const navigate = useNavigate();
-  const [selectedMenu, setSelectedMenu] = useState("View Categories");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  function handleOpenMenu() {
-    setIsMenuOpen(!isMenuOpen);
-  }
-
-  function handleSelectCategory(categoryName: string): void {
-    setSelectedMenu(categoryName);
-  }
+  const handleToggleSidebar = () => {
+    setIsSidebar((prev) => (prev = !prev));
+  };
 
   return (
     <div className="sidebar">
-      <span className="icon--small" onClick={handleOpenMenu}>
+      <span className="sidebar__icon" onClick={handleToggleSidebar}>
         <CgMenuLeft />
       </span>
-      {isMenuOpen ? <Menu onSelectMenu={handleSelectCategory} /> : null}
+      {isSidebar ? (
+        <div className="sidebar__container">
+          {user ? (
+            <>
+              <CategoryList />
+              <UserAvatar user={user} />
+              <AuthButton user={user} />
+            </>
+          ) : (
+            <>
+              <div className="sidebar__welcome">
+                <h1 className="sidebar__welcome--title">Welcome to Our App!</h1>
+                <p className="sidebar__welcome--subtitle">
+                  Sign up and log in to access all the features and start
+                  managing your notes.
+                </p>
+              </div>
+              <AuthButton user={user} />
+            </>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }

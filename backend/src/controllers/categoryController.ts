@@ -1,3 +1,4 @@
+// src/controllers/categoryController.ts
 import { Request, Response, NextFunction } from 'express';
 import {
   createCategoryService,
@@ -8,6 +9,9 @@ import {
 } from '../services/categoryService';
 import { CustomError } from '../utils/customError';
 
+/**
+ * Controller to create a category.
+ */
 export const createCategory = async (
   req: Request,
   res: Response,
@@ -15,7 +19,7 @@ export const createCategory = async (
 ): Promise<void> => {
   try {
     const { name } = req.body;
-    const userId = req.user!.id; // Assuming user is authenticated and added to request
+    const userId = req.user!.id; // User ID from the decoded JWT token
 
     const newCategory = await createCategoryService(name, userId);
 
@@ -27,19 +31,26 @@ export const createCategory = async (
   }
 };
 
+/**
+ * Controller to get all categories for the authenticated user.
+ */
 export const getCategories = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const categories = await getCategoriesService();
+    const userId = req.user!.id; // User ID from the decoded JWT token
+    const categories = await getCategoriesService(userId);
     res.status(200).json({ categories });
   } catch (error) {
     next(error);
   }
 };
 
+/**
+ * Controller to get a category by ID for the authenticated user.
+ */
 export const getCategoryById = async (
   req: Request,
   res: Response,
@@ -47,18 +58,18 @@ export const getCategoryById = async (
 ): Promise<void> => {
   try {
     const categoryId = req.params.id;
-    const category = await getCategoryByIdService(categoryId);
+    const userId = req.user!.id; // User ID from the decoded JWT token
 
-    if (!category) {
-      throw new CustomError('Category not found', 404);
-    }
-
-    res.status(200).json(category);
+    const category = await getCategoryByIdService(categoryId, userId);
+    res.status(200).json({ category });
   } catch (error) {
     next(error);
   }
 };
 
+/**
+ * Controller to update a category by ID for the authenticated user.
+ */
 export const updateCategory = async (
   req: Request,
   res: Response,
@@ -67,19 +78,22 @@ export const updateCategory = async (
   try {
     const categoryId = req.params.id;
     const { name } = req.body;
+    const userId = req.user!.id; // User ID from the decoded JWT token
 
-    const updatedCategory = await updateCategoryService(categoryId, name);
-
-    if (!updatedCategory) {
-      throw new CustomError('Category not found', 404);
-    }
-
-    res.status(200).json(updatedCategory);
+    const updatedCategory = await updateCategoryService(
+      categoryId,
+      name,
+      userId,
+    );
+    res.status(200).json({ updatedCategory });
   } catch (error) {
     next(error);
   }
 };
 
+/**
+ * Controller to delete a category by ID for the authenticated user.
+ */
 export const deleteCategory = async (
   req: Request,
   res: Response,
@@ -87,13 +101,10 @@ export const deleteCategory = async (
 ): Promise<void> => {
   try {
     const categoryId = req.params.id;
-    const result = await deleteCategoryService(categoryId);
+    const userId = req.user!.id; // User ID from the decoded JWT token
 
-    if (!result) {
-      throw new CustomError('Category not found', 404);
-    }
-
-    res.status(204).send({ message: 'Category successfully deleted.' });
+    const result = await deleteCategoryService(categoryId, userId);
+    res.status(204).json({ message: 'Category successfully deleted.' });
   } catch (error) {
     next(error);
   }

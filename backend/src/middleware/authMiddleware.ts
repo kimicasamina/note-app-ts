@@ -4,7 +4,9 @@ import { verifyToken } from '../utils/jwtUtils';
 import { CustomError } from '../utils/customError';
 
 export const authenticate = (req: any, res: Response, next: NextFunction) => {
-  const token = req.cookies.auth_token;
+  const token =
+    req.cookies.auth_token ||
+    req.header('Authorization')?.replace('Bearer ', '');
 
   if (!token) {
     throw new CustomError('No token provided.', 403);

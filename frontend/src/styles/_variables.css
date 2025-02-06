@@ -1,15 +1,27 @@
 :root {
-  /* Colors */
-  --primary-color: #3498db;
-  --secondary-color: #2ecc71;
-  --background-color: #f7f7f7;
-  --text-color: #333;
-  --text-dark: #000000;
-  --text-light: #f8f8f8;
-  --bg-dark: #000000;
-  --bg-light: #f8f8f8;
-  --gray: #535252;
-  --alert: #e52929;
+  /* Text Colors */
+  --text-primary: #333; /* Default text color (dark gray) */
+  --text-dark: #000000; /* Dark text for high contrast */
+  --text-light: #f8f8f8; /* Light text for lighter backgrounds */
+
+  /* Background Colors */
+  --bg-dark: #000000; /* Dark background */
+  --bg-light: #f8f8f8; /* Light background */
+
+  /* Gray Shades */
+  --gray-light: #535252; /* Light gray for borders, text, etc. */
+
+  /* Color States */
+  --color-alert: #e52929; /* Red for alert (e.g., errors, warnings) */
+  --color-success: #27ae60; /* Green for success (e.g., success messages, confirmations) */
+  --color-info: #3498db; /* Blue for informational messages (e.g., tooltips, info notifications) */
+
+  /* Primary and Secondary Colors */
+  --primary-color: #3498db; /* Blue as the primary color for actions (buttons, links) */
+  --secondary-color: #2ecc71; /* Green as secondary color (e.g., secondary buttons or highlights) */
+
+  /* Accent Color */
+  --accent-color: #f39c12; /* Golden yellow for accents (e.g., highlights, special elements) */
 
   /* Spacing */
   --spacing-unit: 1rem;

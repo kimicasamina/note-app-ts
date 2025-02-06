@@ -1,6 +1,5 @@
 .sidebar {
   width: auto;
-  max-width: 250px;
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -9,5 +8,32 @@
   color: var(--text-light);
 }
 
-.sidebar__menu--btn {
+.sidebar__icon {
+  margin-bottom: 16px;
+}
+
+.sidebar__container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 100%;
+}
+
+.sidebar__welcome {
+  /* padding: 14px 0; */
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__welcome--title {
+  font-size: var(--font-size-xl);
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.sidebar__welcome--subtitle {
+  font-size: var(--font-size-base);
+  margin-bottom: 20px;
+  text-wrap: pretty;
+  line-height: 1.5;
 }

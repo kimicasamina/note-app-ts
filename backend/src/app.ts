@@ -16,6 +16,7 @@ const app: Application = express();
 // Middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
 app.use(cookieParser());
 app.use(
   cors({
@@ -25,7 +26,6 @@ app.use(
     credentials: true, // Allow cookies to be sent with the request
   }),
 );
-app.use(helmet());
 
 app.use(express.json());
 

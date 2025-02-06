@@ -2,7 +2,6 @@ import axiosClient from "./apiClient";
 import { User } from "types/types";
 
 // Define the response types for login, register, etc.
-
 interface AuthResponse {
   user: User;
   token: string;
@@ -48,6 +47,13 @@ export const getCurrentUser =
     }
   };
 
-export const logout = async (): Promise<void> => {
-  await axiosClient.delete("/api/auths/logout", { withCredentials: true });
+export const logout = async (): Promise<any> => {
+  try {
+    const response = await axiosClient.delete("/api/auths/logout", {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+  }
 };
