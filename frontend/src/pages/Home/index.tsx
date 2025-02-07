@@ -7,19 +7,16 @@ import "./index.css";
 import useCategory from "@hooks/useCategory";
 import { useAuth } from "@context/authContext";
 export default function Home() {
-  const { selectedCategory, handleSelectCategory } = useCategory();
   const { user } = useAuth();
 
   return (
     <div className="home">
       {user ? (
         <>
-          <Notes selectedCategory={selectedCategory} />
+          <Notes />
           <Editor />
         </>
-      ) : (
-        <></>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import React from "react";
 import "./index.css";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getCategoriesApi } from "@api/categoriesApi";
 import LoadingDots from "@components/LoadingDots/LoadingDots";
 import useCategory from "@hooks/useCategory";
 import { useSelectedItem } from "@context/selectedItemContext";
+import Button from "../Button/Button";
+import AddButton from "@components/AddButton/AddButton";
 
 export default function CategoryList() {
   const { selectedCategory, onSelectCategory } = useSelectedItem();
@@ -44,9 +46,14 @@ export default function CategoryList() {
             onClick={() => onSelectCategory(category.id)}
           >
             {category.name}
+            <span className="category-buttons">
+              <button className="category-buttons--delete">Delete</button>
+              <button className="category-buttons--edit">Edit</button>
+            </span>
           </li>
         ))}
       </ul>
+      <input type="text" className="category__new" placeholder="Add new..." />
     </div>
   );
 }

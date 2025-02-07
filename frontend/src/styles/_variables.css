@@ -33,4 +33,8 @@
   --font-size-xl: 32px;
   --font-size-heading: 2rem;
   --border-radius: 0.3rem;
+
+  --font-brand: "Lora", serif;
+  --font-headings: "Source Sans Pro", sans-serif;
+  --font-body: "Nunito", sans-serif;
 }

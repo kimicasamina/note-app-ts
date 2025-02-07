@@ -20,10 +20,10 @@ interface Note {
 }
 
 export default function Notes() {
-  const { selectedCategory } = useSelectedItem();
+  const { selectedCategory, onSelectNote } = useSelectedItem();
   const { data, isLoading, isError, error } = useQuery("notes", getNotesApi);
-  const [notes, setNotes] = useState<Note[] | null>(null); // This can be further typed if you have a structure for notes
-  console.log("SELECTED", selectedCategory);
+  const [notes, setNotes] = useState<Note[] | null>(null);
+
   useEffect(() => {
     // Update notes based on the selected category when data is available
     if (data && selectedCategory) {
@@ -50,14 +50,17 @@ export default function Notes() {
   }
 
   return (
-    <div className="notes">
-      <ul>
-        {notes.map((note) => (
-          <li className="note-item" key={note.id}>
-            {note.title}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="notes">
+      {notes.map((note) => (
+        <li
+          className="note"
+          key={note.id}
+          onClick={() => onSelectNote(note.id)}
+        >
+          <h3 className="note__title">{note.title}</h3>
+          <p className="note__content">{note.content}</p>
+        </li>
+      ))}
+    </ul>
   );
 }

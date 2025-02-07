@@ -8,6 +8,7 @@ import CategoryList from "@components/CategoriesList";
 import UserAvatar from "@components/UserAvatar";
 import AuthButton from "@components/AuthButton";
 import Brand from "@components/Brand";
+import LoadingDots from "@components/LoadingDots/LoadingDots";
 
 const menus = [
   {
@@ -28,13 +29,17 @@ const menus = [
 ];
 
 export default function Sidebar() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [isSidebar, setIsSidebar] = useState(false);
   const navigate = useNavigate();
 
   const handleToggleSidebar = () => {
     setIsSidebar((prev) => (prev = !prev));
   };
+
+  if (loading) {
+    return <h1 className="">Loading Sidebar...</h1>;
+  }
 
   return (
     <div className="sidebar">
@@ -43,7 +48,7 @@ export default function Sidebar() {
       </span>
       {isSidebar ? (
         <>
-          <Brand />
+          {/* <Brand /> */}
           <div className="sidebar__container">
             {user ? (
               <>

@@ -8,6 +8,7 @@ import { queryClient } from "@utils/queryClient";
 import { useAuth } from "@context/authContext";
 
 export default function MainLayout() {
+  const { user } = useAuth();
   return (
     <div className="main__layout">
       <Sidebar />

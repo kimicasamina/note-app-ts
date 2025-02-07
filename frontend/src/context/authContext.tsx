@@ -12,6 +12,7 @@ import {
   logout as logoutService,
 } from "@api/authApi";
 import { User } from "types/types";
+import LoadingDots from "@components/LoadingDots/LoadingDots";
 
 interface AuthContextType {
   user: User | null;
@@ -95,7 +96,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider value={{ user, login, register, logout, loading }}>
-      {children}
+      {loading ? <h1>LOADING ....</h1> : children}
     </AuthContext.Provider>
   );
 }

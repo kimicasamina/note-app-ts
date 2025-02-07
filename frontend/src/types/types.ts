@@ -18,8 +18,8 @@ export interface User {
   id: string;
   username: string;
   email: string;
-  // notes: Note[];
-  // categories: Category[];
+  notes?: Note[];
+  categories?: Category[];
 }
 
 export interface LoginValues {

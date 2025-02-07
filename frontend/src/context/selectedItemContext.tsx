@@ -5,6 +5,8 @@ type SelectedItemContextType = {
   selectedCategory: string | null;
   onSelectCategory: (item: string) => void;
   clearSelection: () => void;
+  selectedNote: string | null;
+  onSelectNote: (item: string) => void;
 };
 
 // Create the context with an undefined default value
@@ -36,10 +38,12 @@ export const SelectedItemProvider = ({
   children,
 }: SelectedItemProviderProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedNote, setSelectedNote] = useState<string | null>(null);
 
   // Function to select a category
   const onSelectCategory = (item: string) => {
     setSelectedCategory(item);
+    setSelectedNote(null);
   };
 
   // Function to clear the selected category
@@ -47,9 +51,20 @@ export const SelectedItemProvider = ({
     setSelectedCategory(null);
   };
 
+  // Function to select a note
+  const onSelectNote = (item: string) => {
+    setSelectedNote(item);
+  };
+
   return (
     <SelectedItemContext.Provider
-      value={{ selectedCategory, onSelectCategory, clearSelection }}
+      value={{
+        selectedCategory,
+        onSelectCategory,
+        clearSelection,
+        selectedNote,
+        onSelectNote,
+      }}
     >
       {children}
     </SelectedItemContext.Provider>
