@@ -1,15 +1,18 @@
 import React, { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import LoadingDots from "components/LoadingDots/LoadingDots";
-import { useAuth } from "@context/authContext";
+import { useAuth } from "@services/context/authContext";
+// import Home from "@pages/Home";
+// import Login from "@pages/Login";
+// import Signup from "@pages/Signup";
+// import MainLayout from "@layouts/MainLayout";
 
 // Lazy loading the components
 const Home = React.lazy(() => import("../pages/Home"));
 const Login = React.lazy(() => import("../pages/Login"));
 const Signup = React.lazy(() => import("../pages/Signup"));
-const MainLayout = React.lazy(() => import("../layouts/MainLayout/MainLayout"));
+const MainLayout = React.lazy(() => import("../layouts/MainLayout"));
 
-export default function Router() {
+export default function RouterComponent() {
   const { user } = useAuth();
   return (
     <Routes>

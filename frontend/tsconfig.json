@@ -20,6 +20,7 @@
       "@hooks/*": ["hooks/*"],
       "@features/*": ["features/*"],
       "@context/*": ["context/*"],
+      "@services/*": ["services/*"],
       "@api/*": ["api/*"],
       "@styles/*": ["styles/*"],
       "@utils/*": ["utils/*"]

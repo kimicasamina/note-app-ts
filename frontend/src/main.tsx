@@ -3,20 +3,20 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import { QueryClientProvider } from "react-query";
 import { queryClient } from "@utils/queryClient";
-import ErrorBoundary from "@components/ErrorBoundary/ErrorBoundary";
-import AuthProvider from "@context/authContext";
-import { SelectedItemProvider } from "@context/selectedItemContext";
+import ErrorBoundary from "@components/ui/error-boundary";
+import AuthProvider from "@services/context/authContext";
+import { SelectedItemProvider } from "@services/context/selectedItemContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <SelectedItemProvider>
-        <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <SelectedItemProvider>
           <ErrorBoundary>
             <App />
           </ErrorBoundary>
-        </QueryClientProvider>
-      </SelectedItemProvider>
-    </AuthProvider>
+        </SelectedItemProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>
 );

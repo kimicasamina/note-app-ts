@@ -4,8 +4,8 @@ import "./styles/global.css";
 import "./styles/_variables.css";
 import "./styles/_utils.css";
 import "./styles/_animations.css";
-import RouterComponent from "./router"; // Import the router file
-import LoadingDots from "@components/LoadingDots/LoadingDots";
+import RouterComponent from "./router";
+import LoadingDots from "@components/ui/loading-dots";
 
 export default function App() {
   return (
