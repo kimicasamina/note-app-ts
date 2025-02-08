@@ -1,0 +1,35 @@
+/* floatingAddButton styles */
+.floatingAddButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  animation: floating 2s ease-in-out infinite; /* Floating animation */
+}
+
+.floatingAddButton:hover {
+  transform: scale(1.1); /* Slightly increase size on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
+}
+
+/* Add floating animation effect */
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px); /* Moves the button up */
+  }
+}
+
+/* Add icon styling */
+.add-icon {
+  font-size: 36px;
+  color: white;
+  font-weight: bold;
+}

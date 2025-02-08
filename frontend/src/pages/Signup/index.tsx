@@ -7,18 +7,28 @@ import InputField from "@components/ui/input-field";
 import Button from "@components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@services/context/authContext";
+import { registerApi } from "@services/api/authService";
 
+// Define the signup form values type
 interface SignupFormValues {
   email: string;
   username: string;
   password: string;
 }
 
+// You can use the ActionType enum here as you did before
+enum ActionType {
+  SET_USER = "SET_USER",
+  SET_LOADING = "SET_LOADING",
+  RESET_USER = "RESET_USER",
+}
+
 export default function Signup() {
-  const { register, user, loading: authLoading } = useAuth();
+  const { dispatch } = useAuth(); // Use dispatch to interact with AuthContext
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  // Form handling using react-hook-form
   const {
     register: formRegister,
     handleSubmit,
@@ -27,14 +37,23 @@ export default function Signup() {
     resolver: zodResolver(signupSchema),
   });
 
+  // On form submit, attempt to register the user
   const onSubmit = async (data: SignupFormValues) => {
-    setError(null);
+    setError(null); // Reset any previous errors
+    dispatch({ type: ActionType.SET_LOADING, payload: true }); // Set loading state to true
 
     try {
-      await register(data.email, data.username, data.password);
-      navigate("/");
+      // Call the register API function (register API call)
+      const user = await registerApi(data.email, data.username, data.password);
+
+      // Set user data in context after successful registration
+      dispatch({ type: ActionType.SET_USER, payload: user });
+
+      navigate("/"); // Redirect to home page after successful signup
     } catch (err: any) {
       setError(err.message || "An error occurred during signup");
+    } finally {
+      dispatch({ type: ActionType.SET_LOADING, payload: false }); // Set loading to false
     }
   };
 

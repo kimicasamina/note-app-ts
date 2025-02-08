@@ -102,7 +102,7 @@ export const deleteCategory = async (
   try {
     const categoryId = req.params.id;
     const userId = req.user!.id; // User ID from the decoded JWT token
-
+    console.log('REQ', req);
     const result = await deleteCategoryService(categoryId, userId);
     res.status(204).json({ message: 'Category successfully deleted.' });
   } catch (error) {

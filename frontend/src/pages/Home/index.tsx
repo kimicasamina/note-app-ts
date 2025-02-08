@@ -3,7 +3,6 @@ import "./index.css";
 import Notes from "@components/notes";
 import NoteEditor from "@components/note-editor";
 import { useAuth } from "@services/context/authContext";
-import useCategory from "@hooks/useCategory";
 import "./index.css";
 
 export default function Home() {

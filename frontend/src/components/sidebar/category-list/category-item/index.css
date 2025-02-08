@@ -1,0 +1,79 @@
+/* Styling for the entire category item */
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-unit);
+  margin: 5px 0;
+  background-color: var(--bg-light);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Highlight the active category */
+.category-item.active {
+  background-color: var(--gray-light); /* Light gray when active */
+  border-left: 4px solid var(--primary-color); /* Blue border when active */
+}
+
+/* Category name when not editing */
+.category-item__name {
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+/* Input field when editing */
+.category-item input {
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  color: var(--text-dark);
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  text-align: left;
+  padding: 5px;
+  border-radius: var(--border-radius);
+}
+
+/* Buttons container */
+.category-item__buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Delete button styling */
+.category-item__buttons--delete,
+.category-item__buttons--edit {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: var(--font-size-md);
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Hover effect for buttons */
+.category-item__buttons--delete:hover,
+.category-item__buttons--edit:hover {
+  color: var(--color-alert); /* Red for delete and edit on hover */
+  transform: scale(1.1); /* Slight scale on hover */
+}
+
+/* Icon styling */
+.category-item__buttons--delete svg,
+.category-item__buttons--edit svg {
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for icons */
+.category-item__buttons--delete:hover svg,
+.category-item__buttons--edit:hover svg {
+  transform: scale(1.2); /* Slight scale on hover */
+}

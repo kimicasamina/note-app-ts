@@ -24,6 +24,7 @@
       "@api/*": ["api/*"],
       "@styles/*": ["styles/*"],
       "@utils/*": ["utils/*"]
+      // "@types/*": ["types/*"]
     },
     "typeRoots": ["./node_modules/@types", "./types"],
     "types": ["vite/client"]

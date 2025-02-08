@@ -35,21 +35,14 @@ export const register = async (
     res.cookie('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      // sameSite: 'strict',
+      sameSite: 'strict',
       // maxAge: 60 * 60 * 24 * 7 * 1000, // 1 week
     });
 
-    const docs = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-      notes: user.notes,
-      categories: user.categories,
-    };
-
-    res
-      .status(200)
-      .json({ user: docs, message: 'User registered successfully.' });
+    res.status(200).json({
+      user: { email: user.email, username: user.username, id: user.id },
+      message: 'User registered successfully.',
+    });
   } catch (error) {
     next(error);
   }
@@ -86,17 +79,15 @@ export const login = async (
     res.cookie('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
     });
 
-    const docs = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-      notes: user.notes,
-      categories: user.categories,
-    };
-
-    res.status(200).json({ user: docs, message: 'Logged in successfully.' });
+    res
+      .status(200)
+      .json({
+        user: { id: user.id, username: user.username, email: user.email },
+        message: 'Logged in successfully.',
+      });
   } catch (error) {
     next(error);
   }

@@ -7,14 +7,15 @@ interface AddButtonProps {
   color?: string; // Optional background color (default: #ff5733)
 }
 
-const AddButton: React.FC<AddButtonProps> = ({
+export default function AddButton({
   onClick,
   size = "60px",
   color = "#ff5733", // Red color by default
-}) => {
+}: AddButtonProps) {
+  // Fixed here, removed the extra "<>"
   return (
     <div
-      className="floatindAddButton"
+      className="floatingAddButton" // Fixed typo here
       onClick={onClick}
       style={{
         width: size,
@@ -26,6 +27,4 @@ const AddButton: React.FC<AddButtonProps> = ({
       <span className="add-icon">+</span>
     </div>
   );
-};
-
-export default AddButton;
+}

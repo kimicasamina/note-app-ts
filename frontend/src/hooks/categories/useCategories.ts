@@ -1,48 +1,74 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { addCategory, updateCategory, deleteCategory } from "@api/authApi";
-import { Category } from "types/types";
-import { getCurrentUser } from "@api/authApi";
+import { useMutation } from "react-query";
+import { useQuery } from "react-query";
+import { queryClient } from "@utils/queryClient";
+import { createCategoryApi } from "@services/api/categoriesService";
+import { getCategoriesApi } from "@services/api/categoriesService";
+import { updateCategoryApi } from "@services/api/categoriesService";
+import { deleteCategoryApi } from "@services/api/categoriesService";
 
+// Hook to fetch all categories
 export const useCategories = () => {
-  const queryClient = useQueryClient();
-
-  // Fetch categories for the current user
-  const {
-    data: categories,
-    isLoading,
-    isError,
-  } = useQuery<Category[], Error>(["categories"], async () => {
-    const user = await getCurrentUser();
-    return user ? user.categories : [];
-  });
-
-  // Add category
-  const { mutate: addNewCategory } = useMutation(addCategory, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["categories"]);
+  return useQuery("categories", getCategoriesApi, {
+    // Do not fetch on focus or edit
+    refetchOnWindowFocus: false, // Prevent refetching when the window is refocused
+    refetchOnReconnect: true, // Prevent refetching when the app reconnects to the internet
+    staleTime: 1000 * 60 * 5, // Data will stay fresh for 5 minutes, no refetch will occur within this period
+    onError: (error: any) => {
+      console.error("Error fetching categories:", error.message);
     },
   });
+};
 
-  // Update category
-  const { mutate: updateExistingCategory } = useMutation(updateCategory, {
+// Hook to update a category
+export const useUpdateCategory = () => {
+  return useMutation(
+    ({
+      categoryId,
+      categoryName,
+    }: {
+      categoryId: string;
+      categoryName: string;
+    }) => updateCategoryApi(categoryId, categoryName),
+    {
+      onSuccess: () => {
+        // Invalidate the 'categories' query to trigger a refetch after the mutation
+        queryClient.invalidateQueries("categories");
+        console.log("Category updated successfully!");
+      },
+      onError: (error: any) => {
+        console.error("Error updating category:", error.message);
+      },
+    }
+  );
+};
+
+// Hook to create a category
+export const useCreateCategory = () => {
+  return useMutation(
+    (categoryName: string) => createCategoryApi(categoryName),
+    {
+      onSuccess: () => {
+        // Invalidate the 'categories' query to trigger a refetch after the mutation
+        queryClient.invalidateQueries("categories");
+        console.log("Category created successfully!");
+      },
+      onError: (error: any) => {
+        console.error("Error creating category:", error.message);
+      },
+    }
+  );
+};
+
+// Hook to delete a category
+export const useDeleteCategory = () => {
+  return useMutation((categoryId: string) => deleteCategoryApi(categoryId), {
     onSuccess: () => {
-      queryClient.invalidateQueries(["categories"]);
+      // Invalidate the 'categories' query to trigger a refetch after the mutation
+      queryClient.invalidateQueries("categories");
+      console.log("Category deleted successfully!");
+    },
+    onError: (error: any) => {
+      console.error("Error deleting category:", error.message);
     },
   });
-
-  // Delete category
-  const { mutate: deleteExistingCategory } = useMutation(deleteCategory, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["categories"]);
-    },
-  });
-
-  return {
-    categories,
-    isLoading,
-    isError,
-    addNewCategory,
-    updateExistingCategory,
-    deleteExistingCategory,
-  };
 };

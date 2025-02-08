@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "@components/ui/button";
-import { User } from "types/types";
+import { User, ActionType } from "../../../types/types";
 import { useAuth } from "@services/context/authContext";
 
 import "./index.css";
@@ -11,7 +11,8 @@ type AuthButtonProps = {
 };
 
 export default function AuthButton({ user }: AuthButtonProps) {
-  const { logout, loading } = useAuth();
+  const { state, dispatch } = useAuth();
+  const { loading } = state;
 
   return (
     <div className="auth">
@@ -20,7 +21,7 @@ export default function AuthButton({ user }: AuthButtonProps) {
           type="submit"
           label="Logout"
           isLoading={loading}
-          onClick={logout}
+          onClick={() => dispatch({ type: ActionType.RESET_USER })}
         />
       ) : (
         <>

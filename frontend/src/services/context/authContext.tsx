@@ -1,38 +1,51 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-  ReactNode,
-} from "react";
-import {
-  getCurrentUser,
-  login as loginService,
-  register as registerService,
-  logout as logoutService,
-} from "@api/authApi";
+import React, { createContext, useContext, useReducer, ReactNode } from "react";
 import { User } from "types/types";
-import LoadingDots from "@components/LoadingDots/LoadingDots";
 
-interface AuthContextType {
+// Define action types
+enum ActionType {
+  SET_USER = "SET_USER",
+  SET_LOADING = "SET_LOADING",
+  RESET_USER = "RESET_USER",
+}
+
+// Define state interface
+interface AuthState {
   user: User | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (
-    email: string,
-    username: string,
-    password: string
-  ) => Promise<void>;
-  logout: () => void;
   loading: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-interface AuthProviderProps {
-  children: ReactNode;
+// Define action types
+interface Action {
+  type: ActionType;
+  payload?: any;
 }
 
-export const useAuth = (): AuthContextType => {
+const initialState: AuthState = {
+  user: null,
+  loading: false,
+};
+
+// Reducer function to handle state updates
+const authReducer = (state: AuthState, action: Action): AuthState => {
+  switch (action.type) {
+    case ActionType.SET_USER:
+      return { ...state, user: action.payload, loading: false };
+    case ActionType.SET_LOADING:
+      return { ...state, loading: action.payload };
+    case ActionType.RESET_USER:
+      return { ...state, user: null, loading: false };
+    default:
+      return state;
+  }
+};
+
+// Create context
+const AuthContext = createContext<
+  { state: AuthState; dispatch: React.Dispatch<Action> } | undefined
+>(undefined);
+
+// Custom hook to use the AuthContext
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
@@ -40,63 +53,16 @@ export const useAuth = (): AuthContextType => {
   return context;
 };
 
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null); // Correctly type `user`
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const response = await getCurrentUser();
-        if (response?.user) {
-          setUser(response.user);
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuthStatus();
-  }, []);
-
-  const login = async (email: string, password: string) => {
-    try {
-      const response = await loginService({ email, password });
-      setUser(response.user);
-    } catch (error) {
-      console.error("Login failed", error);
-    }
-  };
-
-  const register = async (
-    email: string,
-    username: string,
-    password: string
-  ) => {
-    try {
-      const response = await registerService({ email, username, password });
-      setUser(response.user);
-    } catch (error) {
-      console.error("Registration failed", error);
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await logoutService();
-      setUser(null);
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
-  };
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
-      {loading ? <h1>LOADING ....</h1> : children}
+    <AuthContext.Provider value={{ state, dispatch }}>
+      {children}
     </AuthContext.Provider>
   );
 }

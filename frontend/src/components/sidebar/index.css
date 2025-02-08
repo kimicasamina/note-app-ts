@@ -24,6 +24,7 @@
 
 .sidebar__welcome {
   /* padding: 14px 0; */
+  margin-bottom: auto;
   display: flex;
   flex-direction: column;
 }

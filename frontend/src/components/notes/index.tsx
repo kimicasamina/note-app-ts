@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import { getNotesApi } from "@api/notesApi";
 import LoadingDots from "@components/ui/loading-dots";
-import NoteItem from "@components/notes/NoteItem";
+import NoteItem from "./note-item";
 
 export default function Notes() {
   // const {

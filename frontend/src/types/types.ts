@@ -12,14 +12,20 @@ export interface Category {
   name: string;
   createdAt: string;
   updatedAt: string;
+  user_id: string;
+}
+
+// You can use the ActionType enum here as you did before
+export enum ActionType {
+  SET_USER = "SET_USER",
+  SET_LOADING = "SET_LOADING",
+  RESET_USER = "RESET_USER",
 }
 
 export interface User {
   id: string;
   username: string;
   email: string;
-  notes?: Note[];
-  categories?: Category[];
 }
 
 export interface LoginValues {

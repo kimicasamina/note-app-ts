@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "react-query";
 import { login, register, getCurrentUser } from "../../api/authApi";
-import { queryClient } from "@utils/queryClient";
+import { queryClient } from "@utils/axiosClient";
 import { User } from "../../types/types";
 
 interface LoginVariables {

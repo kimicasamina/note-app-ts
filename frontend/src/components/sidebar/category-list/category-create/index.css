@@ -1,0 +1,77 @@
+/* General container for the category creation */
+.category-create {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* width: 250px; */
+  /* margin: 10px; */
+  margin-bottom: 16px;
+  padding: 5px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Styling for the input field */
+.category-input {
+  width: 80%;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.category-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Styling for the button */
+.category-addnew {
+  width: 30px;
+  height: 30px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+/* Hover effect for the button */
+.category-addnew:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+/* Animation for button click */
+.category-addnew:active {
+  background-color: #003d80;
+  transform: scale(1);
+}
+
+/* Add a subtle animation to the category-create container */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.category-create {
+  animation: fadeIn 0.5s ease-out;
+}

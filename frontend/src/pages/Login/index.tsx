@@ -7,14 +7,21 @@ import { useAuth } from "@services/context/authContext";
 import InputField from "@components/ui/input-field";
 import Button from "@components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { loginApi } from "@services/api/authService";
 
+// Define action types
+enum ActionType {
+  SET_USER = "SET_USER",
+  SET_LOADING = "SET_LOADING",
+  RESET_USER = "RESET_USER",
+}
 interface LoginFormValues {
   email: string;
   password: string;
 }
 
 export default function Login() {
-  const { login, user, loading: authLoading } = useAuth();
+  const { state, dispatch } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -28,21 +35,27 @@ export default function Login() {
 
   const onSubmit = async (data: LoginFormValues) => {
     setError(null); // Reset any previous errors
+    dispatch({ type: ActionType.SET_LOADING, payload: true }); // Set loading to true before making the request
 
     try {
-      await login(data.email, data.password);
-      navigate("/");
+      // API call for login
+      const user = await loginApi(data.email, data.password);
+      console.log("USER", user);
+      dispatch({ type: ActionType.SET_USER, payload: user }); // Set user data in context
+      // navigate("/"); // Redirect to home after successful login
     } catch (err: any) {
       setError(err.message || "An error occurred during login");
+    } finally {
+      dispatch({ type: ActionType.SET_LOADING, payload: false }); // Stop loading after request completes
     }
   };
 
-  // Redirect if user is already authenticated
+  // Redirect if the user is already authenticated
   useEffect(() => {
-    if (user && !authLoading) {
-      navigate("/");
+    if (state.user && !state.loading) {
+      navigate("/"); // Redirect to home if the user is already logged in
     }
-  }, [user, authLoading, navigate]);
+  }, [state.user, state.loading, navigate]);
 
   return (
     <form className="login" onSubmit={handleSubmit(onSubmit)}>

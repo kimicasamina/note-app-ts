@@ -16,7 +16,7 @@ const app: Application = express();
 // Middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(helmet());
+// app.use(helmet());
 app.use(cookieParser());
 app.use(
   cors({
