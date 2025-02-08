@@ -9,6 +9,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
@@ -23,7 +24,8 @@
       "@services/*": ["services/*"],
       "@api/*": ["api/*"],
       "@styles/*": ["styles/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@store/*": ["store/*"]
       // "@types/*": ["types/*"]
     },
     "typeRoots": ["./node_modules/@types", "./types"],

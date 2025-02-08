@@ -1,20 +1,7 @@
-import React from "react";
-import { useQuery } from "react-query";
-import { getNotesApi } from "@api/notesApi";
-import LoadingDots from "@components/ui/loading-dots";
-import NoteItem from "./note-item";
+import { useStore } from "@store/useStore";
 
 export default function Notes() {
-  // const {
-  //   data: notes,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useQuery("notes", getNotesApi);
-
-  // if (isLoading) return <LoadingDots />;
-  // if (isError) return <div>{(error as Error).message}</div>;
-
+  const { selectedCategory } = useStore();
   return (
     <div className="notes-list">
       Notes

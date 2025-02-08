@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
-import { Outlet } from "react-router-dom";
 import Sidebar from "@components/sidebar";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "@context/authContext";
+import { Outlet } from "react-router-dom";
 import "./index.css";
-import { queryClient } from "@utils/axiosClient";
-import { useAuth } from "@services/context/authContext";
 
 export default function MainLayout() {
   const { state } = useAuth();

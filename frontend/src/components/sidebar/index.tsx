@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 import { CgMenuLeft } from "react-icons/cg";
-import { useAuth } from "@services/context/authContext";
-import CategoryList from "./category-list";
 import AuthButton from "@components/sidebar/auth-button";
 import Brand from "@components/sidebar/brand";
 import UserProfile from "@components/sidebar/user-profile";
-import CategoryNew from "./category-list/category-create";
+import { useAuth } from "@context/authContext";
 import AddButton from "@components/ui/add-button";
+import CategoryList from "./category-list";
+import CategoryNew from "./category-list/category-create";
 
 const Sidebar = () => {
   const { state } = useAuth();

@@ -1,10 +1,10 @@
 import { useMutation } from "react-query";
 import { useQuery } from "react-query";
 import { queryClient } from "@utils/queryClient";
-import { createCategoryApi } from "@services/api/categoriesService";
-import { getCategoriesApi } from "@services/api/categoriesService";
-import { updateCategoryApi } from "@services/api/categoriesService";
-import { deleteCategoryApi } from "@services/api/categoriesService";
+import { createCategoryApi } from "@api/categoriesService";
+import { getCategoriesApi } from "@api/categoriesService";
+import { updateCategoryApi } from "@api/categoriesService";
+import { deleteCategoryApi } from "@api/categoriesService";
 
 // Hook to fetch all categories
 export const useCategories = () => {

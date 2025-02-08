@@ -3,11 +3,11 @@ import "./index.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@utils/validations/authSchema";
-import { useAuth } from "@services/context/authContext";
+import { useAuth } from "@context/authContext";
 import InputField from "@components/ui/input-field";
 import Button from "@components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { loginApi } from "@services/api/authService";
+import { loginApi } from "@api/authService";
 
 // Define action types
 enum ActionType {

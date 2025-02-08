@@ -4,18 +4,15 @@ import App from "./App";
 import { QueryClientProvider } from "react-query";
 import { queryClient } from "@utils/queryClient";
 import ErrorBoundary from "@components/ui/error-boundary";
-import AuthProvider from "@services/context/authContext";
-import { SelectedItemProvider } from "@services/context/selectedItemContext";
+import AuthProvider from "@context/authContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <SelectedItemProvider>
-          <ErrorBoundary>
-            <App />
-          </ErrorBoundary>
-        </SelectedItemProvider>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
       </AuthProvider>
     </QueryClientProvider>
   </StrictMode>

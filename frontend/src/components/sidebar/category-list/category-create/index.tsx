@@ -21,7 +21,7 @@ export default function CategoryCreate({
         onChange={(e) => setNewCategoryName(e.target.value)}
         placeholder="New category name"
       />
-      <button className="category-addbtn" onClick={handleCreateCategory}>
+      <button className="category-addnew" onClick={handleCreateCategory}>
         <CgMathPlus />
       </button>
     </div>

@@ -7,12 +7,10 @@ import {
 } from "@hooks/categories/useCategories";
 import LoadingDots from "@components/ui/loading-dots";
 import { Category } from "types/types";
-import { useSelectedItem } from "@services/context/selectedItemContext";
 import CategoryItem from "./category-item";
 import CategoryCreate from "./category-create";
 
 export default function CategoryList() {
-  const { selectedCategory, onSelectCategory } = useSelectedItem();
   const { data: categories, isLoading, isError, error } = useCategories();
   const { mutate: createCategory } = useCreateCategory();
   const { mutate: updateCategory } = useUpdateCategory();
@@ -62,8 +60,6 @@ export default function CategoryList() {
             <CategoryItem
               key={category.id}
               category={category}
-              selectedCategory={selectedCategory}
-              onSelect={onSelectCategory}
               onUpdate={handleUpdateCategory}
               onDelete={handleDeleteCategory}
             />

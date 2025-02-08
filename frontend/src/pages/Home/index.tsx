@@ -2,15 +2,15 @@ import React from "react";
 import "./index.css";
 import Notes from "@components/notes";
 import NoteEditor from "@components/note-editor";
-import { useAuth } from "@services/context/authContext";
+import { useAuth } from "@context/authContext";
 import "./index.css";
 
 export default function Home() {
-  const { user } = useAuth();
+  const { state } = useAuth();
 
   return (
     <div className="home">
-      {user ? (
+      {state.user ? (
         <>
           <Notes />
           <NoteEditor />

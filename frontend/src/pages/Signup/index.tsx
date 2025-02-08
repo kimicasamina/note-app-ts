@@ -6,8 +6,8 @@ import { signupSchema } from "@utils/validations/authSchema";
 import InputField from "@components/ui/input-field";
 import Button from "@components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@services/context/authContext";
-import { registerApi } from "@services/api/authService";
+import { useAuth } from "@context/authContext";
+import { registerApi } from "@api/authService";
 
 // Define the signup form values type
 interface SignupFormValues {

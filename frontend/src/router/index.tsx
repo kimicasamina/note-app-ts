@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useAuth } from "@services/context/authContext";
+import { useAuth } from "@context/authContext";
 // import Home from "@pages/Home";
 // import Login from "@pages/Login";
 // import Signup from "@pages/Signup";

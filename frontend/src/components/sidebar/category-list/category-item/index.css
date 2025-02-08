@@ -15,7 +15,7 @@
 
 /* Highlight the active category */
 .category-item.active {
-  background-color: var(--gray-light); /* Light gray when active */
+  /* background-color: var(--gray-light); Light gray when active */
   border-left: 4px solid var(--primary-color); /* Blue border when active */
 }
 

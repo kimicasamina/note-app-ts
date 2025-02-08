@@ -2,22 +2,18 @@ import React, { useState } from "react";
 import { Category } from "types/types";
 import { CgTrashEmpty, CgPen } from "react-icons/cg";
 import "./index.css";
+import { useStore } from "@store/useStore";
 
 interface CategoryItemProps {
   category: Category;
-  onSelect: (categoryId: string) => void;
+  // onSelect: (categoryId: string) => void;
   onUpdate: (categoryId: string, categoryName: string) => void;
   onDelete: (categoryId: string) => void;
-  selectedCategory: string | null;
+  // selectedCategory: string | null;
 }
 
-const CategoryItem = ({
-  category,
-  onSelect,
-  onUpdate,
-  onDelete,
-  selectedCategory,
-}: CategoryItemProps) => {
+const CategoryItem = ({ category, onUpdate, onDelete }: CategoryItemProps) => {
+  const { setSelectedCategory, selectedCategory } = useStore();
   const [isEditing, setIsEditing] = useState(false);
   const [editableName, setEditableName] = useState(category.name);
 
@@ -41,7 +37,7 @@ const CategoryItem = ({
   return (
     <li
       className={`category-item ${selectedCategory === category.id ? "active" : ""}`}
-      onClick={() => onSelect(category.id)} // Allow selection by clicking on the list item
+      onClick={() => setSelectedCategory(category.id)} // Allow selection by clicking on the list item
     >
       {isEditing ? (
         <input

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Button from "@components/ui/button";
 import { User, ActionType } from "../../../types/types";
-import { useAuth } from "@services/context/authContext";
+import { useAuth } from "@context/authContext";
 
 import "./index.css";
 
