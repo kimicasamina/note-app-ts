@@ -2,9 +2,14 @@ export interface Note {
   id: string;
   title: string;
   content: string;
-  category: Category;
+  category_id: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface FormData {
+  title: string;
+  name: string;
 }
 
 export interface Category {

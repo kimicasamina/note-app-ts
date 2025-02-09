@@ -4,16 +4,16 @@ import { CustomError } from '../utils/customError';
 /**
  * Service function to create a category.
  */
-export const createCategoryService = async (name: string, userId: string) => {
-  return await Category.create({ name, user_id: userId });
+export const createCategoryService = async (name: string, user_id: string) => {
+  return await Category.create({ name, user_id });
 };
 
 /**
  * Service function to get all categories (for authenticated user).
  */
-export const getCategoriesService = async (userId: string) => {
+export const getCategoriesService = async (user_id: string) => {
   try {
-    const categories = await Category.findAll({ where: { user_id: userId } });
+    const categories = await Category.findAll({ where: { user_id } });
     if (categories.length === 0) {
       throw new CustomError('No categories found for this user', 404);
     }
@@ -28,11 +28,11 @@ export const getCategoriesService = async (userId: string) => {
  */
 export const getCategoryByIdService = async (
   categoryId: string,
-  userId: string,
+  user_id: string,
 ) => {
   try {
     const category = await Category.findOne({
-      where: { id: categoryId, user_id: userId },
+      where: { id: categoryId, user_id },
     });
     if (!category) {
       throw new CustomError('Category not found', 404);
@@ -49,11 +49,11 @@ export const getCategoryByIdService = async (
 export const updateCategoryService = async (
   categoryId: string,
   name: string,
-  userId: string,
+  user_id: string,
 ) => {
   try {
     const category = await Category.findOne({
-      where: { id: categoryId, user_id: userId },
+      where: { id: categoryId, user_id },
     });
     if (!category) {
       throw new CustomError('Category not found', 404);
@@ -71,11 +71,11 @@ export const updateCategoryService = async (
  */
 export const deleteCategoryService = async (
   categoryId: string,
-  userId: string,
+  user_id: string,
 ) => {
   try {
     const category = await Category.findOne({
-      where: { id: categoryId, user_id: userId },
+      where: { id: categoryId, user_id },
     });
     if (!category) {
       throw new CustomError('Category not found', 404);

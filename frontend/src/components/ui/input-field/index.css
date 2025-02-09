@@ -1,0 +1,60 @@
+/* index.css */
+
+/* Container for input field */
+.inputField {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+/* Label style */
+.inputField__label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4px;
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Input field style */
+.inputField__input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.2s ease-in-out;
+  outline: none;
+}
+
+.inputField__input:focus {
+  border-color: #0056b3; /* Highlight color on focus */
+  box-shadow: 0 0 5px rgba(0, 86, 179, 0.2);
+}
+
+/* Error message style */
+.inputField__error {
+  font-size: 12px;
+  color: red;
+  margin-top: 4px;
+}
+
+/* Optional: Styling for the input container when the label is missing */
+.inputField__input.no-label {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+/* Responsive input styling (Optional) */
+@media (max-width: 600px) {
+  .inputField {
+    margin-bottom: 1rem;
+  }
+
+  .inputField__input {
+    font-size: 14px;
+    padding: 8px;
+  }
+}

@@ -1,5 +1,13 @@
 import React from "react";
+import "./index.css";
 
 export default function NoteEditor() {
-  return <div>NoteEditor</div>;
+  return (
+    <div
+      className="note-editor
+  "
+    >
+      NoteEditor
+    </div>
+  );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 
 interface InputFieldProps {
-  label: string;
+  label?: string; // Optional label
   type: string;
   errorMessage?: string | any;
   register: any; // React Hook Form's register function will be passed here
@@ -18,9 +18,11 @@ export default function InputField({
 }: InputFieldProps) {
   return (
     <div className="inputField">
-      <label className="inputField__label" htmlFor={name}>
-        {label}
-      </label>
+      {label && (
+        <label className="inputField__label" htmlFor={name}>
+          {label}
+        </label>
+      )}
       <input
         className="inputField__input"
         type={type}
