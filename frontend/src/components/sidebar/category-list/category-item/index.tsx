@@ -13,7 +13,7 @@ interface CategoryItemProps {
 }
 
 const CategoryItem = ({ category, onUpdate, onDelete }: CategoryItemProps) => {
-  const { setSelectedCategory, selectedCategory } = useStore();
+  const { setSelectedCategory, selectedCategory, resetState } = useStore();
   const [isEditing, setIsEditing] = useState(false);
   const [editableName, setEditableName] = useState(category.name);
 
@@ -34,10 +34,15 @@ const CategoryItem = ({ category, onUpdate, onDelete }: CategoryItemProps) => {
     handleSaveChanges(); // Save changes when the input loses focus
   };
 
+  const handleSelectCategory = () => {
+    resetState();
+    setSelectedCategory(category.id);
+  };
+
   return (
     <li
       className={`category-item ${selectedCategory === category.id ? "active" : ""}`}
-      onClick={() => setSelectedCategory(category.id)} // Allow selection by clicking on the list item
+      onClick={handleSelectCategory} // Allow selection by clicking on the list item
     >
       {isEditing ? (
         <input
