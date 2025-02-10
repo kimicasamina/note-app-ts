@@ -26,7 +26,6 @@ export const useNotes = (category_id?: string) => {
 // Mutation for creating a new note
 export const useCreateNote = () => {
   return useMutation(
-    // Change the signature to accept a single object containing all required properties
     ({
       title,
       content,

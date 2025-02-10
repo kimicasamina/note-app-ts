@@ -2,26 +2,28 @@ import React from "react";
 import "./index.css";
 
 interface AddButtonProps {
-  onClick: () => void; // The function to handle button click
-  size?: string; // Optional size (default: 60px)
-  color?: string; // Optional background color (default: #ff5733)
+  onClick: () => void;
+  size?: string;
+  color?: string;
+  style?: React.CSSProperties;
 }
 
 export default function AddButton({
   onClick,
   size = "60px",
-  color = "#ff5733", // Red color by default
+  color = "#ff5733",
+  style,
 }: AddButtonProps) {
-  // Fixed here, removed the extra "<>"
   return (
     <div
-      className="floatingAddButton" // Fixed typo here
+      className="floatingAddButton"
       onClick={onClick}
       style={{
         width: size,
         height: size,
         borderRadius: `${parseInt(size) / 2}px`, // Make button circular
         backgroundColor: color,
+        ...style,
       }}
     >
       <span className="add-icon">+</span>

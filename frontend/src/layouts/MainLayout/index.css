@@ -1,9 +1,10 @@
 .main__layout {
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
 }
 
 .main {
   flex: 1;
+  height: 100%;
 }

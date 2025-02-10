@@ -7,15 +7,18 @@ import "./index.css";
 
 export default function Home() {
   const { state } = useAuth();
+  const user = state;
 
-  return (
+  return user ? (
     <div className="home">
-      {state.user ? (
-        <>
-          <Notes />
-          <NoteEditor />
-        </>
-      ) : null}
+      <Notes />
+      <NoteEditor />
     </div>
-  );
+  ) : null;
+  // {user ? (
+  //   <div className="home">
+  //     <Notes />
+  //     <NoteEditor />
+  //   </div>
+  // ) : null}
 }

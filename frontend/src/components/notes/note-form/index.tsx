@@ -16,14 +16,13 @@ export default function NoteForm({ close }: NoteFormProps) {
   const { handleSubmit, register, errors } = useFormValidation();
   const [isLoading, setIsLoading] = useState(false);
 
-  // Handle form submission with async function
   const handleFormSubmit = async (data: any) => {
     setIsLoading(true);
     try {
       const noteData = {
         title: data.title,
         content: data.content || "",
-        category_id: selectedCategory,
+        category_id: selectedCategory || "",
       };
       await createNote(noteData);
       setIsLoading(false);
@@ -39,7 +38,6 @@ export default function NoteForm({ close }: NoteFormProps) {
     <form className="note-form" onSubmit={handleSubmit(handleFormSubmit)}>
       <h2 className="note-form-title">Create a new Note</h2>
 
-      {/* Input field for title with error handling */}
       <InputField
         type="text"
         name="title"
@@ -47,7 +45,6 @@ export default function NoteForm({ close }: NoteFormProps) {
         errorMessage={errors.title?.message}
       />
 
-      {/* Submit button with loading indicator */}
       <Button
         label="Create"
         isLoading={isLoading}

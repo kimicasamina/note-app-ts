@@ -1,6 +1,10 @@
-/* floatingAddButton styles */
 .floatingAddButton {
   position: absolute;
+  bottom: 50%;
+  left: calc(50% - (38px / 2));
+  transform: translate(-50%, -50%);
+  height: 60px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,26 +13,24 @@
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
-  animation: floating 2s ease-in-out infinite; /* Floating animation */
+  animation: floating 2s ease-in-out infinite;
 }
 
 .floatingAddButton:hover {
-  transform: scale(1.1); /* Slightly increase size on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Add floating animation effect */
 @keyframes floating {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-15px); /* Moves the button up */
+    transform: translateY(-15px);
   }
 }
 
-/* Add icon styling */
 .add-icon {
   font-size: 36px;
   color: white;

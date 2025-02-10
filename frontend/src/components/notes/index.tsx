@@ -5,9 +5,12 @@ import { Note } from "types/types";
 import AddButton from "@components/ui/add-button";
 import { useCreateNote, useNotes } from "@hooks/notes/useNotes";
 import { useStore } from "@store/useStore";
+import { CgSearch } from "react-icons/cg";
+
 import useModal from "@hooks/useModal";
 import NoteForm from "./note-form";
 import Modal from "@components/ui/modal";
+import SearchBar from "./search-bar";
 
 export default function Notes() {
   const { selectedCategory } = useStore();
@@ -16,7 +19,6 @@ export default function Notes() {
   const [noteTitle, setNoteTitle] = useState<string | undefined>(undefined);
   const { isOpen, open, close } = useModal();
 
-  // Handle search input change
   const handleSearchNote = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setNoteTitle(value || undefined); // If value is empty, reset the filter
@@ -43,19 +45,11 @@ export default function Notes() {
     }
   }, [selectedCategory, noteTitle, data]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading notes: {error.message}</div>;
-
   return (
     <div className="notes">
-      <input
-        type="text"
-        value={noteTitle || ""}
-        onChange={handleSearchNote}
-        placeholder="Search notes..."
-        className="notes-filter-input"
-      />
-      {notes.length > 0 ? (
+      <SearchBar noteTitle={noteTitle} handleSearchNote={handleSearchNote} />
+      {isLoading && <div className="">Loading notes...</div>}
+      {!isLoading && notes.length > 0 ? (
         <NotesList notes={notes} />
       ) : (
         <h1 className="">No notes..</h1>
@@ -65,7 +59,16 @@ export default function Notes() {
           <NoteForm close={close} />
         </Modal>
       ) : (
-        <AddButton onClick={handleAddNote} />
+        <AddButton
+          onClick={handleAddNote}
+          size="38px"
+          style={{
+            background: "red",
+            bottom: "20px",
+            position: "absolute",
+            // top: "-0",
+          }}
+        />
       )}
     </div>
   );

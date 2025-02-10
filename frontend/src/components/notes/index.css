@@ -1,8 +1,8 @@
 .notes {
-  height: 100%;
-  padding: 16px;
-}
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 
-.notes-filter-input {
-  margin-bottom: 8px;
+  padding-top: 16px;
+  position: relative;
 }

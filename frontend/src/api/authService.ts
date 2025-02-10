@@ -21,7 +21,6 @@ export const loginApi = async (
       password,
     });
     return response.data.user;
-    // console.log("RESPONSE API", response.data);
   } catch (error: any) {
     // Handle errors (e.g. 401 Unauthorized, 500 Internal Server Error)
     throw new Error(
@@ -66,7 +65,7 @@ export const verifyUserApi = async (): Promise<User | null> => {
 // **Logout API**
 export const logoutApi = async (): Promise<void> => {
   try {
-    await axiosInstance.delete("/api/auths/logout");
+    await axiosClient.delete("/api/auths/logout");
   } catch (error: any) {
     throw new Error(error.response?.data?.message || "Logout failed");
   }

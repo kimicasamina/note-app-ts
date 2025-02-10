@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// Define the return type of the useModal hook
+// Define the return type 
 interface ModalActions {
   isOpen: boolean;
   open: () => void;
