@@ -9,7 +9,7 @@ sequelize
   .authenticate()
   .then(() => {
     console.log('Database connected...');
-    return sequelize.sync({ force: false }); // Set to true for development if you want to reset tables on restart
+    return sequelize.sync({ force: false });
   })
   .then(() => {
     app.listen(PORT, () => {

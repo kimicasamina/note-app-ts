@@ -1,4 +1,5 @@
 .floatingAddButton {
+  background-color: var(--primary-color);
   position: absolute;
   bottom: 50%;
   left: calc(50% - (38px / 2));

@@ -51,7 +51,7 @@ export const updateNoteApi = async (
   note: Note
 ): Promise<Note> => {
   try {
-    const response = await axiosClient.put(`/api/notes/${noteId}`, note);
+    const response = await axiosClient.put(`/api/notes/${noteId}`, { ...note });
     return response.data.note;
   } catch (error: any) {
     // Handle errors (e.g. 400 Bad Request)

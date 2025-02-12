@@ -63,7 +63,7 @@ export default function Notes() {
           onClick={handleAddNote}
           size="38px"
           style={{
-            background: "red",
+            // background: "red",
             bottom: "20px",
             position: "absolute",
             // top: "-0",

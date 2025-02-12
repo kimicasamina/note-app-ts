@@ -12,9 +12,6 @@ const NotesList = ({ notes }: NotesListProps) => {
     <ul className="notes-list">
       {notes.map((note) => (
         <NoteItem note={note} key={note.id} />
-        // <li className="note" key={note.id}>
-        //   {note.title}
-        // </li>
       ))}
     </ul>
   );

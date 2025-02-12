@@ -31,15 +31,15 @@ export const loginApi = async (
 
 // **Register API**
 export const registerApi = async (
+  email: string,
   username: string,
-  password: string,
-  email: string
+  password: string
 ): Promise<User> => {
   try {
     const response = await axiosClient.post("/api/auths/register", {
+      email,
       username,
       password,
-      email,
     });
     return response.data.user;
   } catch (error: any) {

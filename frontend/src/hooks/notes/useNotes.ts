@@ -11,8 +11,8 @@ import {
 // Fetch all notes, with optional filtering by category_id
 export const useNotes = (category_id?: string) => {
   return useQuery(
-    ["notes", category_id], // Add category_id as part of the query key for caching
-    () => getNotesApi(category_id),
+    ["notes", category_id], // Cache by both 'notes' and category_id
+    () => getNotesApi(category_id), // Fetching specific note with category_id
     {
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5, // Cache data for 5 minutes
@@ -22,6 +22,10 @@ export const useNotes = (category_id?: string) => {
     }
   );
 };
+
+// export const useNote = (category_id?:string) => {
+//   return useQuery
+// }
 
 // Mutation for creating a new note
 export const useCreateNote = () => {
@@ -47,14 +51,14 @@ export const useCreateNote = () => {
   );
 };
 
-interface updateNoteProps {
-  noteId: string;
+interface UpdateNoteProps {
+  note_id: string;
   note: Note;
 }
 
 export const useUpdateNote = () => {
   return useMutation(
-    ({ noteId, note }: updateNoteProps) => updateNoteApi(noteId, note), // Wrap in a function that passes the correct signature
+    ({ note_id, note }: UpdateNoteProps) => updateNoteApi(note_id, note), // Pass title, content, and category_id directly
     {
       onSuccess: () => {
         queryClient.invalidateQueries("notes");
