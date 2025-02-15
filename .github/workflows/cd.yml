@@ -1,0 +1,39 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Render
+        uses: render-examples/render-gh-actions@v1
+        with:
+          render_api_key: ${{ secrets.RENDER_API_KEY }}
+
+      - name: Build and deploy Backend to Render
+        run: |
+          docker-compose -f docker-compose.yml up -d backend
+
+      - name: Build and deploy Frontend to Render
+        run: |
+          docker-compose -f docker-compose.yml up -d frontend
+
+      - name: Set up environment variables for backend on Render
+        run: |
+          render services envs create \
+            --service backend \
+            --env DB_HOST=${{ secrets.DATABASE_URL }} \
+            --env DB_USER=postgres \
+            --env DB_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+
+      - name: Deploy to Render
+        run: |
+          render deploy
