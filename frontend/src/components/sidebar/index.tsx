@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import AuthButton from "./components/auth-button";
 import CategoryList from "./components/category-list";
 import CategoryNew from "./components/category-list/category-create";
+import NoteIcon from "@components/ui/note-icon";
 import "./index.css";
 
 const Sidebar = () => {
