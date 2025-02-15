@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNotes, useUpdateNote } from "@hooks/notes/useNotes";
+import { useDeleteNote, useNotes, useUpdateNote } from "@hooks/notes/useNotes";
 import LoadingDots from "@components/ui/loading-dots";
 import { CgEye, CgPen } from "react-icons/cg";
 import { BiSave } from "react-icons/bi";
@@ -17,6 +17,7 @@ export default function Note() {
 
   const [note, setNote] = useState<NoteType | null>(null);
   const { mutate: updateNote } = useUpdateNote();
+  const { mutate: deleteNote, isLoading: isDeleting } = useDeleteNote();
   const [editorValue, setEditorValue] = useState<string>("");
   const [isEditMode, setIsEditMode] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -54,6 +55,18 @@ export default function Note() {
     }
   };
 
+  const handleDelete = async () => {
+    if (note) {
+      try {
+        await deleteNote(note.id);
+        // alert("Note deleted successfully.");
+      } catch (error) {
+        console.error("Failed to delete note:", error);
+        // alert("Error deleting the note.");
+      }
+    }
+  };
+
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key === "s") {
@@ -87,6 +100,8 @@ export default function Note() {
         setIsEditMode={setIsEditMode}
         handleSave={handleSave}
         isSaving={isSaving}
+        handleDelete={handleDelete}
+        isDeleting={isDeleting}
       />
 
       {isSaving ? (

@@ -1,5 +1,14 @@
-import React, { createContext, useContext, useReducer, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  ReactNode,
+  useEffect,
+} from "react";
 import { User } from "types/types";
+import { verifyUserApi } from "@api/authService";
+import LoadingDots from "@components/ui/loading-dots";
+import LoadingSpinner from "@components/ui/loading-spinner";
 
 // Define action types
 enum ActionType {
@@ -60,9 +69,34 @@ interface AuthProviderProps {
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await verifyUserApi();
+        console.log("USER", user);
+        const userDetails = {
+          id: user?.id,
+          email: user?.email,
+          username: user?.username,
+        };
+        if (user) {
+          dispatch({ type: ActionType.SET_USER, payload: userDetails });
+        }
+      } catch (error) {
+        console.log(error);
+        dispatch({ type: ActionType.SET_LOADING, payload: false });
+      }
+    };
+
+    if (!state.user) {
+      fetchUser();
+    }
+  }, []);
+
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
-      {children}
+      {/* {children} */}
+      {state.loading ? <LoadingSpinner size="38px" /> : children}
     </AuthContext.Provider>
   );
 }

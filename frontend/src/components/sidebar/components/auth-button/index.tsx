@@ -5,6 +5,7 @@ import { User } from "types/types";
 import { useAuth } from "@context/authContext";
 
 import "./index.css";
+import { logoutApi } from "@api/authService";
 
 export enum ActionType {
   SET_USER = "SET_USER",
@@ -20,6 +21,16 @@ export default function AuthButton({ user }: AuthButtonProps) {
   const { state, dispatch } = useAuth();
   const { loading } = state;
 
+  const handleLogout = async () => {
+    try {
+      const data = await logoutApi();
+      console.log("data", data);
+      dispatch({ type: ActionType.RESET_USER });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="auth">
       {user ? (
@@ -27,7 +38,7 @@ export default function AuthButton({ user }: AuthButtonProps) {
           type="submit"
           label="Logout"
           isLoading={loading}
-          onClick={() => dispatch({ type: ActionType.RESET_USER })}
+          onClick={handleLogout}
         />
       ) : (
         <>

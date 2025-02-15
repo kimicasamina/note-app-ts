@@ -1,0 +1,36 @@
+/* Main container for the spinner */
+.loading-spinner {
+  display: inline-block;
+  position: relative;
+  animation: rotate 1s linear infinite; /* Animation to rotate the spinner */
+}
+
+/* Spinner circle */
+.spinner-circle {
+  border: 4px solid transparent; /* Invisible border to create a circle */
+  border-radius: 50%;
+  border-top: 4px solid #3498db; /* The top section of the spinner will be colored */
+  width: 100%;
+  height: 100%;
+  animation: spin 1s linear infinite;
+}
+
+/* Keyframes for spinning effect */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Smooth transition for spin animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

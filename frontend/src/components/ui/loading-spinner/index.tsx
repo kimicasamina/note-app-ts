@@ -1,5 +1,5 @@
 import React from "react";
-// import styles from "./LoadingSpinner.scss";
+import "./index.css";
 
 interface LoadingSpinnerProps {
   size?: string; // Optional size for the spinner (default: 40px)

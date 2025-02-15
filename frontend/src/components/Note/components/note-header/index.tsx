@@ -1,7 +1,16 @@
-import { CgEye, CgPen } from "react-icons/cg";
+import { CgEye, CgPen, CgTrash } from "react-icons/cg";
 import { BiSave } from "react-icons/bi";
-import { CgTrash } from "react-icons/cg";
 import "./index.css";
+
+interface NoteMenuProps {
+  title: string;
+  isEditMode: boolean;
+  setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSave: () => void;
+  isSaving: boolean;
+  isDeleting: boolean;
+  handleDelete: () => void;
+}
 
 export default function NoteMenu({
   title,
@@ -9,13 +18,9 @@ export default function NoteMenu({
   setIsEditMode,
   handleSave,
   isSaving,
-}: {
-  title: string;
-  isEditMode: boolean;
-  setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSave: () => void;
-  isSaving: boolean;
-}) {
+  isDeleting,
+  handleDelete,
+}: NoteMenuProps) {
   return (
     <div className="note-menu">
       <div className="note-buttons">
@@ -29,7 +34,7 @@ export default function NoteMenu({
 
         <button
           className="note-delete-btn"
-          onClick={handleSave}
+          onClick={handleDelete}
           disabled={isSaving}
         >
           <CgTrash />

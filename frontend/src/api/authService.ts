@@ -54,7 +54,8 @@ export const registerApi = async (
 export const verifyUserApi = async (): Promise<User | null> => {
   try {
     const response = await axiosClient.get("/api/auths/me");
-    return response.data.user;
+
+    return response.data;
   } catch (error: any) {
     // Handle errors if the user is not authenticated
     // throw new Error(error.response?.data?.message || "Failed to verify user");

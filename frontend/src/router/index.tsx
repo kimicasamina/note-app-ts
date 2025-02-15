@@ -14,17 +14,18 @@ const MainLayout = React.lazy(() => import("../layouts/MainLayout"));
 
 export default function RouterComponent() {
   const { state } = useAuth();
+  const { user, loading } = state;
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route
           path="/login"
-          element={state.user ? <Navigate to="/" /> : <Login />}
+          element={user && !loading ? <Navigate to="/" /> : <Login />}
         />
         <Route
           path="/signup"
-          element={state.user ? <Navigate to="/" /> : <Signup />}
+          element={user && !loading ? <Navigate to="/" /> : <Signup />}
         />
       </Route>
     </Routes>
