@@ -1,0 +1,25 @@
+.note-editor-view {
+  padding: 16px 8px;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.note-edit-view-content {
+  width: 100%;
+  padding: 8px;
+}
+
+.note-header-title {
+  width: 100%;
+}
+
+.note-edit-view-content {
+  padding: 8px;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  word-wrap: break-word;
+}

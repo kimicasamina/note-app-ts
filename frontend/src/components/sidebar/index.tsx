@@ -38,8 +38,6 @@ const Sidebar = () => {
           {user ? (
             <>
               <CategoryList />
-              {/* <CategoryNew /> */}
-              {/* <AddButton onClick={toggleSidebar} size="42px" /> */}
               <UserProfile user={user} />
               <AuthButton user={user} />
             </>

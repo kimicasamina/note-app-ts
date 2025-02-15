@@ -20,6 +20,7 @@ export function ContentEditor({ value, title, onChange }: RichTextEditorProps) {
       [{ align: [] }],
       ["link", "image"],
       ["blockquote", "code-block"],
+      [{ color: [] }, { background: [] }],
     ],
   };
 

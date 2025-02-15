@@ -19,14 +19,16 @@ export default function NoteForm({ close }: NoteFormProps) {
   const handleFormSubmit = async (data: any) => {
     setIsLoading(true);
     try {
-      const noteData = {
-        title: data.title,
-        content: data.content || "",
-        category_id: selectedCategory || "",
-      };
-      await createNote(noteData);
-      setIsLoading(false);
-      close();
+      if (selectedCategory) {
+        const noteData = {
+          title: data.title,
+          content: data.content || "",
+          category_id: selectedCategory,
+        };
+        await createNote(noteData);
+        setIsLoading(false);
+        close();
+      }
     } catch (error) {
       setIsLoading(false);
       console.error("Error creating note", error);

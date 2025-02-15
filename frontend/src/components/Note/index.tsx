@@ -73,10 +73,10 @@ export default function Note() {
   if (isLoading) return <LoadingDots />;
   if (error) return <h1>Error: {error.message}</h1>;
   if (!note) {
-    return <h1>Select a note to edit</h1>;
+    return <h2 className="info-message">Note not found</h2>;
   }
   if (!selectedNote) {
-    return <h1 className="">Please select a note...</h1>;
+    return <h2 className="info-message">Please select a note</h2>;
   }
 
   return (

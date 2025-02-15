@@ -1,90 +1,145 @@
+/* Category Container */
 .category-container {
-  flex: 1;
-  width: 100%;
-  background-color: orange;
-}
-
-.category-container .category-create {
-  width: 100%;
   display: flex;
-  gap: 8px;
-  background-color: aquamarine;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.category-container .category-input {
-  width: 100%;
+.category-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.category-container .category-addbtn {
-  width: 100%;
-}
-
+/* Category List */
 .category-list {
-  height: 100%;
-  width: 100%;
+  margin-top: 16px;
+  list-style-type: none;
+  padding: 0;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Style for each category item */
+/* Fade-in animation for category list */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Category Item Styling */
 .category-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px;
-  /* border-bottom: 1px solid var(--text-); */
-  font-size: var(--font-size-xs);
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  color: var(--text-light);
-  font-weight: 600;
-  border-radius: 8px;
-  margin-bottom: 4px;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-/* Hover effect for each category item */
 .category-item:hover {
-  background-color: var(--bg-light);
-  color: var(--text-dark);
-  border-radius: 8px;
+  transform: scale(1.02);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.category-buttons {
-  display: none;
+.category-item__name {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
 }
 
-.category-item:hover > .category-buttons {
+.category-item__buttons {
   display: flex;
-  gap: 4px;
-  /* animation: shake 0.6s ease-in-out forwards; */
+  gap: 8px;
 }
 
-/* Active category item */
-.category-item.active {
-  position: relative;
+.category-item__buttons button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
-/* Vertical white line on active category item */
-/* Vertical white line on active category item */
-.category-item.active::before {
-  content: "";
-  position: absolute;
-  left: 0; /* Position the line horizontally at the center */
-  top: 50%; /* Position the line vertically at the center */
-  width: 4px; /* Width of the line */
-  height: 0; /* Initial height of the line (collapsed state) */
-  background-color: white;
-  border-radius: 8px;
-  transform: translateY(
-    -50%
-  ); /* Center the line both vertically and horizontally */
-  animation: expandLine 0.3s forwards; /* Apply the animation */
+.category-item__buttons button:hover {
+  background-color: #f1f1f1;
 }
 
-/* Keyframes for the vertical line animation */
-@keyframes expandLine {
-  0% {
-    height: 0;
-  }
-  100% {
-    height: 24px; /* Expanded height */
-  }
+.category-item__buttons button:focus {
+  outline: none;
+}
+
+/* Category Create Styles */
+.category-create {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.category-input {
+  flex-grow: 1;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.category-input:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
+.category-addnew {
+  background-color: #4caf50;
+  color: white;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.category-addnew:hover {
+  background-color: #45a049;
+}
+
+.category-addnew:disabled {
+  background-color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+/* Loading Dots Custom Styling */
+.custom-style {
+  margin-bottom: 16px;
+  margin-top: 16px;
+  width: 35%;
+  justify-content: center;
+}
+
+/* General Button Styles (if buttons are used globally) */
+button {
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+/* Adding transition to smoothen button hover */
+button:hover {
+  transform: scale(1.05);
+  background-color: #f0f0f0;
 }

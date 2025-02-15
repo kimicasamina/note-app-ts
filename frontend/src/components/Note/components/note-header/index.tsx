@@ -1,5 +1,6 @@
 import { CgEye, CgPen } from "react-icons/cg";
 import { BiSave } from "react-icons/bi";
+import { CgTrash } from "react-icons/cg";
 import "./index.css";
 
 export default function NoteMenu({
@@ -17,26 +18,41 @@ export default function NoteMenu({
 }) {
   return (
     <div className="note-menu">
-      {/* <h2 className="note-header-title">{title}</h2> */}
-      <button
-        className="note-save-btn"
-        onClick={handleSave}
-        disabled={isSaving}
-      >
-        <BiSave className="" /> Save
-      </button>
+      <div className="note-buttons">
+        <button
+          className="note-save-btn"
+          onClick={handleSave}
+          disabled={isSaving}
+        >
+          <BiSave className="" /> Save
+        </button>
 
-      {isEditMode ? (
-        <button className="note-view-btn" onClick={() => setIsEditMode(false)}>
-          <CgEye className="icon" />
-          View Content
+        <button
+          className="note-delete-btn"
+          onClick={handleSave}
+          disabled={isSaving}
+        >
+          <CgTrash />
+          Delete
         </button>
-      ) : (
-        <button className="note-edit-btn" onClick={() => setIsEditMode(true)}>
-          <CgPen className="icon" />
-          Edit Content
-        </button>
-      )}
+      </div>
+
+      <div className="note-toggle">
+        {isEditMode ? (
+          <button
+            className="note-view-btn"
+            onClick={() => setIsEditMode(false)}
+          >
+            <CgEye className="icon" />
+            View Note
+          </button>
+        ) : (
+          <button className="note-edit-btn" onClick={() => setIsEditMode(true)}>
+            <CgPen className="icon" />
+            Edit Note
+          </button>
+        )}
+      </div>
     </div>
   );
 }

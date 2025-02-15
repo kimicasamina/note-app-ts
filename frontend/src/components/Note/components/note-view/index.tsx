@@ -12,7 +12,7 @@ export default function NoteView({
     <div className="note-editor-view">
       <h2 className="note-header-title">{title}</h2>
       <div
-        // className="note-editor-view"
+        className="note-editor-view-content"
         dangerouslySetInnerHTML={{ __html: value }}
       />
     </div>

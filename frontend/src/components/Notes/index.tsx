@@ -48,12 +48,12 @@ export default function Notes() {
   return (
     <div className="notes">
       <SearchBar noteTitle={noteTitle} handleSearchNote={handleSearchNote} />
-      {isLoading && <div className="">Loading notes...</div>}
+      {isLoading && <div className="loading-message">Loading notes...</div>}
       {!isLoading && notes.length > 0 ? (
         <NotesList notes={notes} />
-      ) : (
-        <h1 className="">No notes..</h1>
-      )}
+      ) : null
+      // <h1 className="info-message">No notes..</h1>
+      }
       {isOpen ? (
         <Modal onClose={close}>
           <NoteForm close={close} />

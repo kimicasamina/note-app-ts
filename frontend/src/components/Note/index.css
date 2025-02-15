@@ -15,3 +15,12 @@
   height: 100%;
   overflow: hidden;
 }
+
+.info-message {
+  font-size: var(--font-size-sm);
+  padding: 16px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

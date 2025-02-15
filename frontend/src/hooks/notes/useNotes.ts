@@ -14,8 +14,8 @@ export const useNotes = (category_id?: string) => {
     ["notes", category_id], // Cache by both 'notes' and category_id
     () => getNotesApi(category_id), // Fetching specific note with category_id
     {
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5, // Cache data for 5 minutes
+      refetchOnWindowFocus: true,
+      staleTime: 1000 * 60 * 1, // Cache data for 5 minutes
       onError: (error: any) => {
         console.error("Error fetching notes:", error.message);
       },

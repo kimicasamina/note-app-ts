@@ -9,15 +9,22 @@
   justify-content: start;
   overflow: hidden;
   padding: 0 16px;
+  cursor: pointer;
 }
 
 .note-item.active {
   background-color: var(--bg-dark);
+  color: var(--text-light);
 }
 
 .note-item:hover {
   background-color: var(--bg-dark);
   color: var(--text-light);
+}
+
+.note-item:hover {
+  transform: scale(1.01);
+  transition: transform 0.2s ease;
 }
 
 .note-title {
