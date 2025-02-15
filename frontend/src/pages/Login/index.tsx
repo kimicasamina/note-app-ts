@@ -41,8 +41,10 @@ export default function Login() {
       // API call for login
       const user = await loginApi(data.email, data.password);
       console.log("USER", user);
-      dispatch({ type: ActionType.SET_USER, payload: user }); // Set user data in context
-      // navigate("/"); // Redirect to home after successful login
+      if (user) {
+        dispatch({ type: ActionType.SET_USER, payload: user });
+        navigate("/"); // Redirect to home after successful login
+      }
     } catch (err: any) {
       setError(err.message || "An error occurred during login");
     } finally {

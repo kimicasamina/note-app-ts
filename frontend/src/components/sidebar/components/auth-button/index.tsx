@@ -1,10 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "@components/ui/button";
-import { User, ActionType } from "../../../types/types";
+import { User } from "types/types";
 import { useAuth } from "@context/authContext";
 
 import "./index.css";
+
+export enum ActionType {
+  SET_USER = "SET_USER",
+  SET_LOADING = "SET_LOADING",
+  RESET_USER = "RESET_USER",
+}
 
 type AuthButtonProps = {
   user: User | null;

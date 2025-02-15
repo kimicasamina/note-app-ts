@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import NotesList from "./note-list";
+import NotesList from "./components/note-list";
 import { Note } from "types/types";
 import AddButton from "@components/ui/add-button";
 import { useCreateNote, useNotes } from "@hooks/notes/useNotes";
@@ -8,9 +8,9 @@ import { useStore } from "@store/useStore";
 import { CgSearch } from "react-icons/cg";
 
 import useModal from "@hooks/useModal";
-import NoteForm from "./note-form";
+import NoteForm from "./components/note-form";
 import Modal from "@components/ui/modal";
-import SearchBar from "./search-bar";
+import SearchBar from "./components/search-bar";
 
 export default function Notes() {
   const { selectedCategory } = useStore();

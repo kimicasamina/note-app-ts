@@ -2,30 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useNotes, useUpdateNote } from "@hooks/notes/useNotes";
 import LoadingDots from "@components/ui/loading-dots";
 import { CgEye, CgPen } from "react-icons/cg";
-import TextEditor from "./text-editor";
+import { BiSave } from "react-icons/bi";
+
+import { ContentEditor } from "./components/content-editor";
 import { useStore } from "@store/useStore";
-import { Note } from "types/types";
+import { Note as NoteType } from "types/types";
 import "./index.css";
-import NoteView from "@components/note-view";
+import NoteView from "./components/note-view";
+import NoteHeader from "./components/note-header";
 
-interface UpdateNoteProps {
-  note_id: string;
-  note: Note;
-}
-
-export default function NoteEditor() {
+export default function Note() {
   const { selectedNote } = useStore();
   const { data, isLoading, error } = useNotes();
 
-  const [note, setNote] = useState<Note | null>(null);
+  const [note, setNote] = useState<NoteType | null>(null);
   const { mutate: updateNote } = useUpdateNote();
   const [editorValue, setEditorValue] = useState<string>("");
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-
-  // Early return to handle loading and error states
-  if (isLoading) return <LoadingDots />;
-  if (error) return <h1>Error: {error.message}</h1>;
 
   useEffect(() => {
     if (data && selectedNote) {
@@ -75,12 +69,18 @@ export default function NoteEditor() {
     };
   }, [note, editorValue]);
 
+  // Early return to handle loading and error states
+  if (isLoading) return <LoadingDots />;
+  if (error) return <h1>Error: {error.message}</h1>;
   if (!note) {
     return <h1>Select a note to edit</h1>;
   }
+  if (!selectedNote) {
+    return <h1 className="">Please select a note...</h1>;
+  }
 
   return (
-    <div className="note-editor">
+    <div className="note">
       <NoteHeader
         title={note.title}
         isEditMode={isEditMode}
@@ -90,55 +90,20 @@ export default function NoteEditor() {
       />
 
       {isSaving ? (
-        <h1 className="">Loading...</h1>
+        <LoadingDots />
       ) : (
-        <div>
+        <div className="note-container">
           {isEditMode ? (
-            <TextEditor value={editorValue} onChange={handleTextChange} />
+            <ContentEditor
+              title={note.title}
+              value={editorValue}
+              onChange={handleTextChange}
+            />
           ) : (
-            <NoteView value={editorValue} />
+            <NoteView value={editorValue} title={note.title} />
           )}
         </div>
       )}
-    </div>
-  );
-}
-
-function NoteHeader({
-  title,
-  isEditMode,
-  setIsEditMode,
-  handleSave,
-  isSaving,
-}: {
-  title: string;
-  isEditMode: boolean;
-  setIsEditMode: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSave: () => void;
-  isSaving: boolean;
-}) {
-  return (
-    <div className="note-header">
-      <h2>{title}</h2>
-
-      <div className="note-header-buttons">
-        <div>
-          <button onClick={handleSave} disabled={isSaving}>
-            {isSaving ? "Saving..." : "Save"}
-          </button>
-        </div>
-        {isEditMode ? (
-          <CgEye
-            className="note-editor-icon"
-            onClick={() => setIsEditMode(false)}
-          />
-        ) : (
-          <CgPen
-            className="note-editor-icon"
-            onClick={() => setIsEditMode(true)}
-          />
-        )}
-      </div>
     </div>
   );
 }

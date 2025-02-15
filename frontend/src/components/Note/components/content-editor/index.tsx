@@ -7,9 +7,10 @@ import "./index.css";
 interface RichTextEditorProps {
   value: string;
   onChange: (newValue: string) => void;
+  title: string;
 }
 
-export function TextEditor({ value, onChange }: RichTextEditorProps) {
+export function ContentEditor({ value, title, onChange }: RichTextEditorProps) {
   // Options for Quill (customizing the toolbar)
   const modules = {
     toolbar: [
@@ -23,7 +24,8 @@ export function TextEditor({ value, onChange }: RichTextEditorProps) {
   };
 
   return (
-    <div className="editor-container">
+    <div className="content-editor-container">
+      {/* Quill editor */}
       <ReactQuill
         value={value}
         onChange={onChange}
@@ -34,5 +36,3 @@ export function TextEditor({ value, onChange }: RichTextEditorProps) {
     </div>
   );
 }
-
-export default TextEditor;

@@ -1,0 +1,49 @@
+.content-editor-container {
+  height: 100%;
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.quill {
+  position: relative;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ql-toolbar {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  border: none;
+  background-color: var(--bg-dark);
+}
+
+.ql-container {
+  height: 100%;
+  flex: 1;
+  background-color: blueviolet;
+  overflow-y: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.ql-editor {
+  max-height: 100%;
+  /* flex: 1; */
+  /* overflow-y: scroll; */
+  flex: 1;
+  overflow-y: scroll;
+  background-color: white;
+  padding: 16px;
+  scrollbar-width: none;
+}

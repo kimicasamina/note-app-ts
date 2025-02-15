@@ -2,8 +2,7 @@
   width: 100%;
   height: 100%;
   display: grid;
-  /* background-color: var(--bg-light);
-   */
-  background-color: purple;
+  background-color: var(--bg-light);
+
   grid-template-columns: 1fr 2fr;
 }

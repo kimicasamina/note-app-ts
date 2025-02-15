@@ -16,10 +16,8 @@ const NoteItem = ({ note }: NoteItemProps) => {
   };
 
   return (
-    <div className="note-item">
-      <h3 className="note-title" onClick={handleSelectNote}>
-        {note.title}
-      </h3>
+    <div className="note-item" onClick={handleSelectNote}>
+      <h3 className="note-title">{note.title}</h3>
     </div>
   );
 };

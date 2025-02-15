@@ -1,0 +1,17 @@
+.note {
+  height: 100%;
+  overflow: hidden;
+  background-color: blue;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.note-container {
+  flex: 1;
+  background-color: var(--bg-light);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./index.css";
-import { CgMenuLeft } from "react-icons/cg";
-import AuthButton from "@components/sidebar/auth-button";
-import Brand from "@components/sidebar/brand";
-import UserProfile from "@components/sidebar/user-profile";
-import { useAuth } from "@context/authContext";
+import Brand from "@components/sidebar/components/brand";
+import UserProfile from "@components/sidebar/components/user-profile";
 import AddButton from "@components/ui/add-button";
-import CategoryList from "./category-list";
-import CategoryNew from "./category-list/category-create";
+import { useAuth } from "@context/authContext";
+import React, { useState } from "react";
+import { CgMenuLeft } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
+import AuthButton from "./components/auth-button";
+import CategoryList from "./components/category-list";
+import CategoryNew from "./components/category-list/category-create";
+import "./index.css";
 
 const Sidebar = () => {
   const { state } = useAuth();
@@ -20,13 +20,13 @@ const Sidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  // if (loading) {
-  //   return (
-  //     <div className="sidebar">
-  //       <h1>Loading Sidebar...</h1>
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div className="sidebar">
+        <h1>Loading Sidebar...</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="sidebar">
