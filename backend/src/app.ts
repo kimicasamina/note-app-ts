@@ -30,6 +30,9 @@ app.use(
 app.use(express.json());
 
 // API endpoints
+app.use('/api/', (req, res) => {
+  res.send('SERVER IS READY');
+});
 app.use('/api/users', userRoutes);
 app.use('/api/auths', authRoutes);
 app.use('/api/notes', noteRoutes);

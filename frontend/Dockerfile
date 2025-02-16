@@ -9,7 +9,7 @@ WORKDIR /app
 # Install dependencies
 COPY package*.json ./
 RUN npm cache clean --force
-RUN npm install --legacy-peer-deps
+RUN npm install --legacy-peer-deps && npm run build
 
 # Copy the application code
 COPY . .
