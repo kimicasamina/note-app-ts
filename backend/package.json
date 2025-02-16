@@ -41,7 +41,7 @@
     "@types/sequelize": "^4.28.20",
     "@types/supertest": "^6.0.2",
     "@types/winston": "^2.4.4",
-    "@typescript-eslint/parser": "^8.21.0",
+    "@typescript-eslint/parser": "^7.0.0",
     "eslint-config-airbnb-typescript": "^19.0.0",
     "eslint": "^8.2.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
