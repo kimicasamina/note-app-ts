@@ -9,7 +9,8 @@ sequelize
   .authenticate()
   .then(() => {
     console.log('Database connected...');
-    return sequelize.sync({ force: false });
+    // return sequelize.sync({ force: false });
+    return sequelize.authenticate();
   })
   .then(() => {
     app.listen(PORT, () => {

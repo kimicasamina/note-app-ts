@@ -1,0 +1,69 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js (for any build steps)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      # Step 3: Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Step 4: Build the backend Docker image
+      - name: Build Backend Docker image
+        run: |
+          docker build -t backend ./backend
+
+      # Step 5: Build the frontend Docker image
+      - name: Build Frontend Docker image
+        run: |
+          docker build -t frontend ./frontend
+
+      # Step 6: Log in to Render using the Render API key
+      - name: Log in to Render
+        uses: render-examples/render-gh-actions@v1
+        with:
+          render_api_key: ${{ secrets.RENDER_API_KEY }}
+
+      # Step 7: Deploy Backend to Render
+      - name: Deploy Backend to Render
+        run: |
+          # Make sure to pass all necessary environment variables
+          render services create \
+            --service backend \
+            --env DB_URL=${{ secrets.DB_URL }} \
+            --env JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            --env CLIENT_URL=${{ secrets.CLIENT_URL }} \
+            --env DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            --env PORT=${{ secrets.PORT }} \
+            --env NODE_ENV=production \
+            --docker-image backend
+
+      # Step 8: Deploy Frontend to Render
+      - name: Deploy Frontend to Render
+        run: |
+          render services create \
+            --service frontend \
+            --env VITE_API_URL=${{ secrets.API_URL }} \
+            --env VITE_ENV_MODE=development \
+            --docker-image frontend
+
+      # Step 9: Finalize and clean up
+      - name: Cleanup
+        run: |
+          docker system prune -f

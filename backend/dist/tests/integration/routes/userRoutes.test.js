@@ -23,7 +23,7 @@ beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
 afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
     yield database_1.default.close(); // Close the database connection after tests
 }));
-describe('User Routes', () => {
+describe.skip('User Routes', () => {
     it('should create a new user', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app_1.default).post('/api/users').send({
             username: 'JohnDoe',

@@ -1,37 +1,24 @@
-# FROM node:14
+# Use the official Node.js image from Docker Hub
+FROM node:14-alpine
 
-# WORKDIR /app
-
-# COPY package*.json ./
-
-# RUN npm install
-
-# COPY . .
-
-# RUN npm run build
-
-# CMD ["node", "dist/app.js"]
-
-# Use Node.js official image
-FROM node:16-alpine
-
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the app code
+# Install TypeScript globally
+RUN npm install -g typescript
+
+# Copy the application code
 COPY . .
 
 # Compile TypeScript to JavaScript
-RUN npm run build
+RUN tsc
 
 # Expose the backend port
 EXPOSE 5000
 
-# Start the app
-CMD ["npm", "run", "prod"]
-
-
+# Command to run the backend
+CMD ["npm", "run", "start"]

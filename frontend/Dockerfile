@@ -1,36 +1,24 @@
-# FROM node:14
+# Use the official Node.js image from Docker Hub
+FROM node:14-alpine
 
-# WORKDIR /app
-
-# COPY package*.json ./
-
-# RUN npm install
-
-# COPY . .
-
-# RUN npm run build
-
-# CMD ["npm", "start"]
-
-
-# Use Node.js official image
-FROM node:16-alpine
-
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the app code
+# Copy the application code
 COPY . .
 
-# Build the app
+# Build the React app
 RUN npm run build
 
-# Expose frontend port
+# Install the serve package to serve the built app
+RUN npm install -g serve
+
+# Expose the frontend port
 EXPOSE 3000
 
-# Start the app
-CMD ["npm", "run", "start"]
+# Command to serve the built app
+CMD ["serve", "-s", "build"]
