@@ -1,5 +1,6 @@
 # Use the official Node.js image from Docker Hub
-FROM node:18-slim
+FROM node:18-alpine
+
 
 
 # Set the working directory

@@ -8,17 +8,32 @@ export const generateToken = (
   email: string,
   username: string,
 ): string => {
-  const secret = process.env.JWT_SECRET as string;
+  const secretOrPrivateKey = process.env.JWT_SECRET;
 
-  // Set expiresIn explicitly as a string (e.g. '1h')
+  // Ensure secretOrPrivateKey is a valid string
+  if (typeof secretOrPrivateKey !== 'string') {
+    throw new CustomError(
+      'JWT_SECRET is not defined or is not a valid string',
+      500,
+    );
+  }
+
   const options: jwt.SignOptions = { expiresIn: '1h' };
-
   const payload = { id, email, username };
-  return jwt.sign(payload, secret, options);
+
+  return jwt.sign(payload, secretOrPrivateKey, options);
 };
 
 export const verifyToken = (token: string) => {
-  const secret = process.env.JWT_SECRET as string;
+  const secret = process.env.JWT_SECRET;
+
+  if (typeof secret !== 'string') {
+    throw new CustomError(
+      'JWT_SECRET is not defined or is not a valid string',
+      500,
+    );
+  }
+
   try {
     return jwt.verify(token, secret);
   } catch (error) {
