@@ -23,5 +23,5 @@ RUN npm install -g serve
 # Expose the frontend port
 EXPOSE 3000
 
-# Command to serve the built app with fallback to index.html
-CMD ["serve", "-s", "build", "-l", "3000", "--single"]
+# Command to serve the built app with fallback to index.html for SPA routing
+CMD ["serve", "-s", "build", "--single"]
