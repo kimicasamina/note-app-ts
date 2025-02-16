@@ -56,7 +56,9 @@ jobs:
       # Step 9: Install Render CLI
       - name: Install Render CLI
         run: |
-          curl -sSL https://cli.render.com | sh
+          # curl -sSL https://cli.render.com | sh
+          curl -fsSL https://raw.githubusercontent.com/render-oss/cli/refs/heads/main/bin/install.sh | sh
+
         shell: bash
 
       # Step 10: Authenticate with Render using your API key
