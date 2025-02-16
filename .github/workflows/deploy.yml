@@ -56,15 +56,13 @@ jobs:
       # Step 9: Install Render CLI
       - name: Install Render CLI
         run: |
-          # curl -sSL https://cli.render.com | sh
           curl -fsSL https://raw.githubusercontent.com/render-oss/cli/refs/heads/main/bin/install.sh | sh
-
         shell: bash
 
-      # Step 10: Authenticate with Render using your API key
+      # Step 10: Authenticate with Render using the API token
       - name: Authenticate with Render
         run: |
-          render login --api-key ${{ secrets.RENDER_API_KEY }}
+          echo "${{ secrets.RENDER_API_KEY }}" | render login --api-key
         shell: bash
 
       # Step 11: Create Backend Service on Render
