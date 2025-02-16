@@ -51,7 +51,7 @@ jobs:
           curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}"
         shell: bash
 
-      # Step 8: Clean up Docker images
+      # Step 8: Clean up Docker image
       - name: Clean up Docker images
         run: |
           docker system prune -f
