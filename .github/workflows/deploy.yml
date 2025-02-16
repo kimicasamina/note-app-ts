@@ -62,7 +62,8 @@ jobs:
       # Step 10: Authenticate with Render using the API token
       - name: Authenticate with Render
         run: |
-          echo "${{ secrets.RENDER_API_KEY }}" | render login --api-key
+          export RENDER_API_TOKEN=${{ secrets.RENDER_API_TOKEN }}
+          render login --token $RENDER_API_TOKEN
         shell: bash
 
       # Step 11: Create Backend Service on Render
