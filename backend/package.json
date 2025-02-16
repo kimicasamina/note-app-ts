@@ -10,7 +10,7 @@
     "test": "jest --config jest.config.js",
     "lint": "eslint 'src/**/*.ts' --fix",
     "prettier": "prettier --write 'src/**/*.ts' 'src/**/*.js'",
-    "docker:build": "docker build -t my-node-typescript-app .",
+    "docker:build": "docker build -t backend .",
     "docker:run": "docker run -p 5000:5000 my-node-typescript-app",
     "docker:dev": "docker-compose up"
   },
