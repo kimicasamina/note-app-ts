@@ -34,13 +34,17 @@ jobs:
         run: |
           docker build -t frontend ./frontend
 
-      # Step 6: Log in to Render using the Render API key
-      - name: Log in to Render
-        uses: render-examples/render-gh-actions@v1
-        with:
-          render_api_key: ${{ secrets.RENDER_API_KEY }}
+      # Step 6: Install Render CLI
+      - name: Install Render CLI
+        run: |
+          curl -sSL https://cli.render.com | sh
 
-      # Step 7: Deploy Backend to Render
+      # Step 7: Authenticate with Render using your API key
+      - name: Authenticate with Render
+        run: |
+          render login --api-key ${{ secrets.RENDER_API_KEY }}
+
+      # Step 8: Deploy Backend to Render
       - name: Deploy Backend to Render
         run: |
           # Make sure to pass all necessary environment variables
@@ -54,7 +58,7 @@ jobs:
             --env NODE_ENV=production \
             --docker-image backend
 
-      # Step 8: Deploy Frontend to Render
+      # Step 9: Deploy Frontend to Render
       - name: Deploy Frontend to Render
         run: |
           render services create \
@@ -63,7 +67,7 @@ jobs:
             --env VITE_ENV_MODE=production \
             --docker-image frontend
 
-      # Step 9: Finalize and clean up
+      # Step 10: Finalize and clean up
       - name: Cleanup
         run: |
           docker system prune -f
