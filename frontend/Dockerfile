@@ -1,19 +1,20 @@
-# Use the official Nodejs image from Docker Hub
+# Use the official Node.js image from Docker Hub
 FROM node:18-alpine
 
 # Set the working directory
 WORKDIR /app
 
-# Install dependencies
+# Copy package*.json files first (for better cache management)
 COPY package*.json ./
-RUN npm cache clean --force
-RUN npm install --legacy-peer-deps 
-RUN npm run build
 
-# Copy the application code
+# Install dependencies
+RUN npm cache clean --force
+RUN npm install --legacy-peer-deps
+
+# Copy the application code (including tsconfig.json)
 COPY . .
 
-# Build the React app
+# Build the React app (and TypeScript code)
 RUN npm run build
 
 # Install the serve package to serve the built app
