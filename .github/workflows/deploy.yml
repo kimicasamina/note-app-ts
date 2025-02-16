@@ -3,82 +3,56 @@ name: Deploy to Render
 on:
   push:
     branches:
-      - main
+      - main # or the branch you want to deploy from
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the code
+      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js (for any build steps)
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-
-      # Step 3: Set up Docker Buildx
+      # Step 2: Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Step 4: Build the backend Docker image
-      - name: Build Backend Docker image
-        run: |
-          docker build -t backend ./backend
-
-      # Step 5: Build the frontend Docker image
-      - name: Build Frontend Docker image
-        run: |
-          docker build -t frontend ./frontend
-
-      # Step 6: Set up DockerHub Login
+      # Step 3: Log in to DockerHub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 7: Push Backend Docker image to Docker Hub
-      - name: Push Backend Docker image to Docker Hub
+      # Step 4: Build and push the backend Docker image
+      - name: Build Backend Docker image
         run: |
+          docker build -t backend ./backend
           docker tag backend:latest ${{ secrets.DOCKER_USERNAME }}/backend:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/backend:latest
 
-      # Step 8: Push Frontend Docker image to Docker Hub
-      - name: Push Frontend Docker image to Docker Hub
+      # Step 5: Build and push the frontend Docker image
+      - name: Build Frontend Docker image
         run: |
+          docker build -t frontend ./frontend
           docker tag frontend:latest ${{ secrets.DOCKER_USERNAME }}/frontend:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/frontend:latest
 
-      # Step 9: Install Render CLI
-      - name: Install Render CLI
+      # Step 6: Trigger Backend Deploy on Render
+      - name: Trigger Backend Deploy on Render
         run: |
-          curl -fsSL https://raw.githubusercontent.com/render-oss/cli/refs/heads/main/bin/install.sh | sh
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}"
         shell: bash
 
-      # Step 10: Authenticate with Render by using the API token in a non-interactive way
-      - name: Authenticate with Render
+      # Step 7: Trigger Frontend Deploy on Render
+      - name: Trigger Frontend Deploy on Render
         run: |
-          render login --api-token ${{ secrets.RENDER_API_TOKEN }} > /dev/null 2>&1
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}"
         shell: bash
 
-      # Step 11: Redeploy Backend Service on Render (to update the Docker image)
-      - name: Redeploy Backend Service on Render
-        run: |
-          render services redeploy noted-app-server -o json
-        shell: bash
-
-      # Step 12: Redeploy Frontend Service on Render (to update the Docker image)
-      - name: Redeploy Frontend Service on Render
-        run: |
-          render services redeploy noted-app-client -o json
-        shell: bash
-
-      # Step 13: Finalize and clean up
-      - name: Cleanup
+      # Step 8: Clean up Docker images
+      - name: Clean up Docker images
         run: |
           docker system prune -f
         shell: bash
