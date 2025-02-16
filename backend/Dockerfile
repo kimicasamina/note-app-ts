@@ -7,9 +7,7 @@ WORKDIR /app
 # Install dependencies
 COPY package*.json ./
 RUN npm cache clean --force
-# RUN npm install 
-RUN npm install --legacy-peer-deps
-
+RUN npm install --legacy-peer-deps  # Use --legacy-peer-deps to avoid peer dependency conflicts
 
 # Install TypeScript globally
 RUN npm install -g typescript
