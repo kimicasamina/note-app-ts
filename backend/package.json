@@ -11,7 +11,7 @@
     "lint": "eslint 'src/**/*.ts' --fix",
     "prettier": "prettier --write 'src/**/*.ts' 'src/**/*.js'",
     "docker:build": "docker build -t backend .",
-    "docker:run": "docker run -p 5000:5000 my-node-typescript-app",
+    "docker:run": "docker run -p 5000:5000 backend",
     "docker:dev": "docker-compose up"
   },
   "dependencies": {
