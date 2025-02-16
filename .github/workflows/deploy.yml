@@ -59,11 +59,10 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/render-oss/cli/refs/heads/main/bin/install.sh | sh
         shell: bash
 
-      # Step 10: Authenticate with Render using the API token
-      - name: Authenticate with Render
+      # Step 10: Authenticate with Render by setting the API token as an environment variable
+      - name: Set Render API Token
         run: |
-          export RENDER_API_TOKEN=${{ secrets.RENDER_API_TOKEN }}
-          render login --token $RENDER_API_TOKEN
+          echo "RENDER_API_TOKEN=${{ secrets.RENDER_API_TOKEN }}" >> $GITHUB_ENV
         shell: bash
 
       # Step 11: Create Backend Service on Render
