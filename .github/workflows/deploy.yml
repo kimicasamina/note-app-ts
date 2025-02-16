@@ -60,7 +60,7 @@ jobs:
           render services create \
             --service frontend \
             --env VITE_API_URL=${{ secrets.API_URL }} \
-            --env VITE_ENV_MODE=development \
+            --env VITE_ENV_MODE=production \
             --docker-image frontend
 
       # Step 9: Finalize and clean up
