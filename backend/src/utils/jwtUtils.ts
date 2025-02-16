@@ -8,14 +8,11 @@ export const generateToken = (
   email: string,
   username: string,
 ): string => {
-  // return jwt.sign({ id, email, username }, JWT_SECRET, {
-  //   expiresIn: JWT_EXPIRATION,
-  // });
-
   const secret = process.env.JWT_SECRET as string;
-  const options = { expiresIn: '1h' };
 
-  // Adding typings to the payload for better clarity
+  // Set expiresIn explicitly as a string (e.g. '1h')
+  const options: jwt.SignOptions = { expiresIn: '1h' };
+
   const payload = { id, email, username };
   return jwt.sign(payload, secret, options);
 };
