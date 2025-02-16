@@ -1,13 +1,12 @@
 # Use the official Node.js image from Docker Hub
 FROM node:18-alpine
 
-
-
 # Set the working directory
 WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
+RUN npm cache clean --force
 RUN npm install
 
 # Install TypeScript globally
