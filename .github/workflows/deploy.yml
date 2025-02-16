@@ -65,10 +65,11 @@ jobs:
           render login --api-key ${{ secrets.RENDER_API_KEY }}
         shell: bash
 
-      # Step 11: Deploy Backend to Render (update service)
+      # Step 11: Deploy Backend to Render (create service if not exists)
       - name: Deploy Backend to Render
         run: |
-          render services update noted-api \
+          render services create \
+            --name noted-server \
             --docker-image ${{ secrets.DOCKER_USERNAME }}/backend:latest \
             --env DB_URL=${{ secrets.DB_URL }} \
             --env JWT_SECRET=${{ secrets.JWT_SECRET }} \
@@ -78,10 +79,11 @@ jobs:
             --env NODE_ENV=production
         shell: bash
 
-      # Step 12: Deploy Frontend to Render (update service)
+      # Step 12: Deploy Frontend to Render (create service if not exists)
       - name: Deploy Frontend to Render
         run: |
-          render services update noted-app \
+          render services create \
+            --name noted-client \
             --docker-image ${{ secrets.DOCKER_USERNAME }}/frontend:latest \
             --env VITE_API_URL=${{ secrets.API_URL }} \
             --env VITE_ENV_MODE=production
