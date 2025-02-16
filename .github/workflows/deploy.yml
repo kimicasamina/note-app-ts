@@ -68,8 +68,7 @@ jobs:
       # Step 11: Update Backend Service on Render
       - name: Update Backend Service on Render
         run: |
-          render services update \
-            noted-app-server \  
+          render services update noted-app-server \
             --docker-image ${{ secrets.DOCKER_USERNAME }}/backend:latest \
             --env DB_URL=${{ secrets.DB_URL }} \
             --env JWT_SECRET=${{ secrets.JWT_SECRET }} \
@@ -82,8 +81,7 @@ jobs:
       # Step 12: Update Frontend Service on Render
       - name: Update Frontend Service on Render
         run: |
-          render services update \
-            noted-app-client \  
+          render services update noted-app-client \
             --docker-image ${{ secrets.DOCKER_USERNAME }}/frontend:latest \
             --env VITE_API_URL=${{ secrets.API_URL }} \
             --env VITE_ENV_MODE=production
