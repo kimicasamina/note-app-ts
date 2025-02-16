@@ -65,16 +65,16 @@ jobs:
           echo "RENDER_API_TOKEN=${{ secrets.RENDER_API_TOKEN }}" >> $GITHUB_ENV
         shell: bash
 
-        # Step 11: Redeploy Backend Service on Render (to update the Docker image)
+      # Step 11: Redeploy Backend Service on Render (to update the Docker image)
       - name: Redeploy Backend Service on Render
         run: |
-          render services redeploy noted-app-server
+          render services redeploy noted-app-server -o json
         shell: bash
 
       # Step 12: Redeploy Frontend Service on Render (to update the Docker image)
       - name: Redeploy Frontend Service on Render
         run: |
-          render services redeploy noted-app-client
+          render services redeploy noted-app-client -o json
         shell: bash
 
       # Step 13: Finalize and clean up
