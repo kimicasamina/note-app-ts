@@ -65,26 +65,16 @@ jobs:
           echo "RENDER_API_TOKEN=${{ secrets.RENDER_API_TOKEN }}" >> $GITHUB_ENV
         shell: bash
 
-      # Step 11: Update Backend Service on Render
-      - name: Update Backend Service on Render
+        # Step 11: Redeploy Backend Service on Render (to update the Docker image)
+      - name: Redeploy Backend Service on Render
         run: |
-          render services update noted-app-server \
-            --docker-image ${{ secrets.DOCKER_USERNAME }}/backend:latest \
-            --env DB_URL=${{ secrets.DB_URL }} \
-            --env JWT_SECRET=${{ secrets.JWT_SECRET }} \
-            --env CLIENT_URL=${{ secrets.CLIENT_URL }} \
-            --env DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            --env PORT=${{ secrets.PORT }} \
-            --env NODE_ENV=production
+          render services redeploy noted-app-server
         shell: bash
 
-      # Step 12: Update Frontend Service on Render
-      - name: Update Frontend Service on Render
+      # Step 12: Redeploy Frontend Service on Render (to update the Docker image)
+      - name: Redeploy Frontend Service on Render
         run: |
-          render services update noted-app-client \
-            --docker-image ${{ secrets.DOCKER_USERNAME }}/frontend:latest \
-            --env VITE_API_URL=${{ secrets.API_URL }} \
-            --env VITE_ENV_MODE=production
+          render services redeploy noted-app-client
         shell: bash
 
       # Step 13: Finalize and clean up
