@@ -65,27 +65,26 @@ jobs:
           echo "RENDER_API_TOKEN=${{ secrets.RENDER_API_TOKEN }}" >> $GITHUB_ENV
         shell: bash
 
-      # Step 11: Create Backend Service on Render
-      - name: Create Backend Service on Render
+      # Step 11: Update Backend Service on Render
+      - name: Update Backend Service on Render
         run: |
-          render services create \
-            --type web \
-            --docker-image ${{ secrets.DOCKER_USERNAME }}/backend:latest \
+          render services update \
+            --name noted-app-server \  
+            --docker-image ${{ secrets.DOCKER_USERNAME }}/backend:latest \  # Update the Docker image
             --env DB_URL=${{ secrets.DB_URL }} \
             --env JWT_SECRET=${{ secrets.JWT_SECRET }} \
             --env CLIENT_URL=${{ secrets.CLIENT_URL }} \
             --env DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
             --env PORT=${{ secrets.PORT }} \
             --env NODE_ENV=production
-
         shell: bash
 
-      # Step 12: Create Frontend Service on Render
-      - name: Create Frontend Service on Render
+      # Step 12: Update Frontend Service on Render
+      - name: Update Frontend Service on Render
         run: |
-          render services create \
-            --type static \
-            --docker-image ${{ secrets.DOCKER_USERNAME }}/frontend:latest \
+          render services update \
+            --name noted-app-client \  
+            --docker-image ${{ secrets.DOCKER_USERNAME }}/frontend:latest \  # Update the Docker image
             --env VITE_API_URL=${{ secrets.API_URL }} \
             --env VITE_ENV_MODE=production
         shell: bash
