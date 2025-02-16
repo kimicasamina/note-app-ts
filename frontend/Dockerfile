@@ -24,4 +24,4 @@ RUN npm install -g serve
 EXPOSE 3000
 
 # Command to serve the built app with fallback to index.html for SPA routing
-CMD ["serve", "-s", "build", "--single"]
+CMD ["serve", "-s", "dist", "--single"]
