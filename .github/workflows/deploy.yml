@@ -69,8 +69,7 @@ jobs:
       - name: Create Backend Service on Render
         run: |
           render services create \
-            --name noted-app-server \
-            --service-type web \
+            --type web \
             --docker-image ${{ secrets.DOCKER_USERNAME }}/backend:latest \
             --env DB_URL=${{ secrets.DB_URL }} \
             --env JWT_SECRET=${{ secrets.JWT_SECRET }} \
@@ -78,14 +77,14 @@ jobs:
             --env DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
             --env PORT=${{ secrets.PORT }} \
             --env NODE_ENV=production
+
         shell: bash
 
       # Step 12: Create Frontend Service on Render
       - name: Create Frontend Service on Render
         run: |
           render services create \
-            --name noted-app-client \
-            --service-type static \
+            --type static \
             --docker-image ${{ secrets.DOCKER_USERNAME }}/frontend:latest \
             --env VITE_API_URL=${{ secrets.API_URL }} \
             --env VITE_ENV_MODE=production
