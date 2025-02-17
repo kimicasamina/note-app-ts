@@ -1,30 +1,56 @@
-# Step 1: Build the React app
-FROM node:20 AS build
+# Use the official Node.js image from Docker Hub
+FROM node:20-alpine
 
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package*.json files first 
 COPY package*.json ./
 
 # Install dependencies
-# RUN npm install
+RUN npm cache clean --force
 RUN npm install --legacy-peer-deps
 
-
-# Copy the rest of the code
+# Copy the application code
 COPY . .
 
-# Build the React app for production
+# Build the React app
 RUN npm run build
 
-# Step 2: Serve the React app using a static file server
-FROM nginx:alpine
+# Install the serve package to serve the built app
+RUN npm install -g serve
 
-# Copy the build from the previous step
-COPY --from=build /app/build /usr/share/nginx/html
+# Expose the frontend port (adjust based on Render config)
+EXPOSE 3000
 
-# Expose port 80 for the app
-EXPOSE 80
+# Command to serve the built app with fallback to index.html for SPA routing
+CMD ["serve", "-s", "dist", "--single"]
 
-# Start the nginx server
-CMD ["nginx", "-g", "daemon off;"]
+
+# # Use the official Node.js image from Docker Hub
+# FROM node:18-alpine
+
+# # Set the working directory
+# WORKDIR /app
+
+# # Copy package*.json files first 
+# COPY package*.json ./
+
+# # Install dependencies
+# RUN npm cache clean --force
+# RUN npm install --legacy-peer-deps
+
+# # Copy the application code 
+# COPY . .
+
+# # Build the React app 
+# RUN npm run build
+
+# # Install the serve package to serve the built app
+# RUN npm install -g serve
+
+# # Expose the frontend port
+# EXPOSE 3000
+
+# # Command to serve the built app with fallback to index.html for SPA routing
+# CMD ["serve", "-s", "dist", "--single"]
