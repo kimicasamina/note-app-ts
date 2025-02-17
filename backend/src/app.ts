@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
-import corsOptions from 'utils/corsOption';
+import corsOptions from './utils/corsOption';
 import { errorMiddleware } from './middleware/errorMiddleware';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
