@@ -1,4 +1,3 @@
-// custom-error.ts
 export class CustomError extends Error {
   status: number;
 

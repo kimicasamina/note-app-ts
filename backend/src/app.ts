@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
+import corsOptions from 'utils/corsOption';
 import { errorMiddleware } from './middleware/errorMiddleware';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
@@ -16,16 +17,9 @@ const app: Application = express();
 // Middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(helmet());
+app.use(helmet());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL, // Ensure this is the exact URL of your frontend app
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'], // Include Authorization header if needed
-    credentials: true, // Allow cookies to be sent with the request
-  }),
-);
+app.use(corsOptions);
 
 app.use(express.json());
 

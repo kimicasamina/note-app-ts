@@ -10,7 +10,6 @@ export const generateToken = (
 ): string => {
   const secretOrPrivateKey = process.env.JWT_SECRET;
 
-  // Ensure secretOrPrivateKey is a valid string
   if (typeof secretOrPrivateKey !== 'string') {
     throw new CustomError(
       'JWT_SECRET is not defined or is not a valid string',

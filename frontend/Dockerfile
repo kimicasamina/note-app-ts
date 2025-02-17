@@ -1,27 +1,28 @@
-# Use the official Node.js image from Docker Hub
-FROM node:18-alpine
+# Step 1: Build the React app
+FROM node:18 AS build
 
-# Set the working directory
 WORKDIR /app
 
-# Copy package*.json files first 
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
 # Install dependencies
-RUN npm cache clean --force
-RUN npm install --legacy-peer-deps
+RUN npm install
 
-# Copy the application code 
+# Copy the rest of the code
 COPY . .
 
-# Build the React app 
+# Build the React app for production
 RUN npm run build
 
-# Install the serve package to serve the built app
-RUN npm install -g serve
+# Step 2: Serve the React app using a static file server
+FROM nginx:alpine
 
-# Expose the frontend port
-EXPOSE 3000
+# Copy the build from the previous step
+COPY --from=build /app/build /usr/share/nginx/html
 
-# Command to serve the built app with fallback to index.html for SPA routing
-CMD ["serve", "-s", "dist", "--single"]
+# Expose port 80 for the app
+EXPOSE 80
+
+# Start the nginx server
+CMD ["nginx", "-g", "daemon off;"]
